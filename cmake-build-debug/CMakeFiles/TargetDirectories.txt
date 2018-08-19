@@ -1,0 +1,3 @@
+/home/rasp/CLionProjects/Raspternal/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/rasp/CLionProjects/Raspternal/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/rasp/CLionProjects/Raspternal/cmake-build-debug/CMakeFiles/Raspternal.dir
