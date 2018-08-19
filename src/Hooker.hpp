@@ -18,6 +18,10 @@ namespace Offsets {
     namespace Jump {
         inline uintptr_t IN_JUMP;
     }
+
+    namespace GlowManager {
+        inline uintptr_t memoryAddress;
+    }
 }
 
 

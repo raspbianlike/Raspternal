@@ -23,11 +23,11 @@ void Hooker::FindForceJumpAddress() {
 }
 
 void Hooker::FindGlowObjectManager() {
-    uintptr_t mov = csgo.FindPattern("\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00\xC7\x05\x00\x00\x00\x00\xFF\xFF\xFF\xFF\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00", "xxx????????xx????xxxxxxx????????", "client_panorama_client.so", "IN_JUMP Pointer");
+    uintptr_t glowManagerMov = csgo.FindPattern("\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00\xC7\x05\x00\x00\x00\x00\xFF\xFF\xFF\xFF\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00", "xxx????????xx????xxxxxxx????????", "client_panorama_client.so", "Glow Manager");
     //Logger::Address("glowManagerStruct A", mov);
     //Logger::Address("glowManagerStruct -50", mov - 0x56);
 
-    uintptr_t glowManagerStruct = csgo.GetCallAddress(mov - 0x55);
+    Offsets::GlowManager::memoryAddress = csgo.GetCallAddress(glowManagerMov - 0x55);
 
-    Logger::Address("glowManagerStructA", glowManagerStruct);
+    Logger::Address("glowManagerStructA", Offsets::GlowManager::memoryAddress);
 }
