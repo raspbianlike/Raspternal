@@ -1,4 +1,5 @@
 #include "Hooker.hpp"
+
 Zero csgo;
 
 void Hooker::Init() {
@@ -23,7 +24,8 @@ void Hooker::FindForceJumpAddress() {
 }
 
 void Hooker::FindGlowObjectManager() {
-    uintptr_t glowManagerMov = csgo.FindPattern("\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00\xC7\x05\x00\x00\x00\x00\xFF\xFF\xFF\xFF\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00", "xxx????????xx????xxxxxxx????????", "client_panorama_client.so", "Glow Manager");
+    uintptr_t glowManagerMov = csgo.FindPattern("\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00\xC7\x05\x00\x00\x00\x00\xFF\xFF\xFF\xFF\x48\xC7\x05\x00\x00\x00\x00\x00\x00\x00\x00", "xxx????????xx????xxxxxxx????????",
+                                                "client_panorama_client.so", "Glow Manager");
     //Logger::Address("glowManagerStruct A", mov);
     //Logger::Address("glowManagerStruct -50", mov - 0x56);
 
