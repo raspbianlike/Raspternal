@@ -2,6 +2,8 @@
 #include "Logger.hpp"
 #include "Hooker.hpp"
 
+#include "Hacks/hacks.hpp"
+
 #include <iostream>
 #include <link.h>
 #include <thread>
@@ -36,5 +38,13 @@ void Init() {
 
 int main() {
     Init();
-    return 0;
+
+    Glow::Start();
+    // The below will be implemented as some sort of cli console to manage modules
+    // Soon:tm:
+    // getchar();
+    // pthread_cancel(Glow::glow);
+
+    for(;;)
+        ;
 }

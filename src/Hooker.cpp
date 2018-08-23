@@ -1,7 +1,5 @@
 #include "Hooker.hpp"
 
-Zero csgo;
-
 void Hooker::Init() {
     csgo.Process("csgo_linux64");
     csgo.ProcessMaps();

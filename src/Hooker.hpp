@@ -4,7 +4,7 @@
 #include "Zero.hpp"
 #include "Logger.hpp"
 
-extern Zero csgo;
+inline Zero csgo;
 
 namespace Offsets {
     namespace LocalPlayer {
