@@ -8,9 +8,13 @@
 namespace BHop {
     void Start();
 
+    void Stop();
+
     void *Run(void *);
 
     inline pthread_t bhop;
+
+    inline bool enabled = false;
 }
 
 #endif //RASPTERNAL_BHOP_HPP

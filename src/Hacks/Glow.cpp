@@ -27,7 +27,7 @@ void *Glow::Run(void *) {
                                  sizeof(Entity))) // could basically be used as a temporary entitylist replacement until entitylist is implemented
                 continue;
 
-            if (ent.health < 1 && !ent.teamNum)
+            if (ent.health < 1)
                 continue;
 
             /*if (ent.health < 1 && !ent.teamNum) { // draw weapons white
@@ -58,5 +58,23 @@ void *Glow::Run(void *) {
 }
 
 void Glow::Start() {
-    pthread_create(&glow, nullptr, Run, nullptr); // maybe switch to std::thread?
+    if (!Glow::enabled)
+        pthread_create(&glow, nullptr, Run, nullptr); // maybe switch to std::thread?
+    else {
+        Logger::Error("Glow is already enabled!");
+        return;
+    }
+    Logger::Info("Glow has been enabled!");
+    Glow::enabled = true;
+}
+
+void Glow::Stop() {
+    if (Glow::enabled)
+        pthread_cancel(glow);
+    else {
+        Logger::Error("Glow is already disabled!");
+        return;
+    }
+    Logger::Info("Glow has been disabled!");
+    Glow::enabled = false;
 }
