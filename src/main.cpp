@@ -14,19 +14,6 @@
 
 using namespace std;
 
-Display *disp = XOpenDisplay(0);
-KeyCode modcode = 0; //init value
-
-bool GetKeyState(KeySym keySym) {
-
-    char szKey[32];
-    int iKeyCodeToFind = XKeysymToKeycode(disp, keySym);
-
-    XQueryKeymap(disp, szKey);
-
-    return szKey[iKeyCodeToFind / 8] & (1 << (iKeyCodeToFind % 8));
-}
-
 void Init() {
     Hooker::Init();
     Hooker::FindLocalPlayer();
@@ -40,6 +27,8 @@ int main() {
     Init();
 
     Glow::Start();
+    BHop::Start();
+
     // The below will be implemented as some sort of cli console to manage modules
     // Soon:tm:
     // getchar();

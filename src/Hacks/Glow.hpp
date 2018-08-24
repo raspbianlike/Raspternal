@@ -1,18 +1,14 @@
 #ifndef RASPTERNAL_GLOW_HPP
 #define RASPTERNAL_GLOW_HPP
 
-#include "../Zero.hpp"
-#include "../Hooker.hpp"
 #include "../SDK/Entity.hpp"
-
-#include "thread"
-#include <pthread.h>
+#include "../SDK/SDK.hpp"
 
 namespace Glow {
-    template< class T >
+    template<class T>
     class CUtlVector {
     public:
-        T* DataPtr; // 0000 (054612C0)
+        T *DataPtr; // 0000 (054612C0)
         unsigned int Max; // 0004 (054612C4)
         unsigned int unk02; // 0008 (054612C8)
         unsigned int Count; // 000C (054612CC)
@@ -20,11 +16,11 @@ namespace Glow {
     };
 
     struct GlowObjectDefinition_t {
-        void* m_pEntity;
-        float m_flGlowRed;
-        float m_flGlowGreen;
-        float m_flGlowBlue;
-        float m_flGlowAlpha;
+        void *m_pEntity;
+        float r;
+        float g;
+        float b;
+        float a;
         uint8_t pad[16];
         bool m_bRenderWhenOccluded : 8;
         bool m_bRenderWhenUnoccluded : 8;
@@ -50,7 +46,7 @@ namespace Glow {
         unsigned int unk5; // 0028 (054612E8)
     };
 
-    void* Run(void*);
+    void *Run(void *);
 
     void Start();
 

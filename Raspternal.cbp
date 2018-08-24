@@ -66,6 +66,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/BHop.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/BHop.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
 		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Glow.cpp">
 			<Option target="Raspternal"/>
 		</Unit>
@@ -88,6 +94,15 @@
 			<Option target="Raspternal"/>
 		</Unit>
 		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/Entity.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/KeyCheck.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/KeyCheck.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/SDK.hpp">
 			<Option target="Raspternal"/>
 		</Unit>
 		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Zero.cpp">
