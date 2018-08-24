@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/Raspternal.dir/src/Hooker.cpp.o CMakeFiles/Raspternal.dir/src/Logger.cpp.o CMakeFiles/Raspternal.dir/src/Zero.cpp.o CMakeFiles/Raspternal.dir/src/main.cpp.o  -o Raspternal -Wl,-Bstatic -lstdc++fs -Wl,-Bdynamic -ldl -lX11 -lXtst 
