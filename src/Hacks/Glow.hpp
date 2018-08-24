@@ -3,7 +3,7 @@
 
 #include "../SDK/Entity.hpp"
 #include "../SDK/SDK.hpp"
-
+#include "../SDK/CBasePlayer.hpp"
 namespace Glow {
     template<class T>
     class CUtlVector {

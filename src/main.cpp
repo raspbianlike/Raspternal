@@ -103,6 +103,7 @@ void Init() {
     Hooker::FindLocalPlayer();
     Hooker::FindForceJumpAddress();
     Hooker::FindGlowObjectManager();
+    Hooker::FindEntityList();
 
     Logger::Info("Init finished!");
 }
@@ -116,7 +117,8 @@ int main() {
      * module disable [module]
      *
      */
-
+    Triggerbot::Start();
+    XInitThreads();
     printf("\n");
     char input[128];
     for (;;) {

@@ -13,6 +13,7 @@ namespace Offsets {
         inline uintptr_t flags = 0x138;
         inline uintptr_t flash = 0xABEC;
         inline uintptr_t shoot = 0xABB0;
+        inline uintptr_t crosshairID = 0xBBE0;
     }
 
     namespace Jump {
@@ -21,6 +22,10 @@ namespace Offsets {
 
     namespace GlowManager {
         inline uintptr_t memoryAddress;
+    }
+
+    namespace EntityList {
+        inline uintptr_t entityListPointer;
     }
 }
 
@@ -34,6 +39,8 @@ public:
     static void FindForceJumpAddress();
 
     static void FindGlowObjectManager();
+
+    static void FindEntityList();
 };
 
 

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Raspternal"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/rasp/CLionProjects/Raspternal"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/rasp/CLionProjects/Raspternal"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/rasp/CLionProjects/Raspternal"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Raspternal">
+				<Option output="/home/rasp/CLionProjects/Raspternal/Raspternal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/rasp/CLionProjects/Raspternal"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 Raspternal"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Raspternal/fast">
+				<Option output="/home/rasp/CLionProjects/Raspternal/Raspternal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/rasp/CLionProjects/Raspternal"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 Raspternal/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/rasp/CLionProjects/Raspternal/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/BHop.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/BHop.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Glow.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Glow.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Triggerbot.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Triggerbot.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/hacks.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hooker.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hooker.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Logger.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Logger.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/CBasePlayer.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/CBasePlayer.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/Entity.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/KeyCheck.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/KeyCheck.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/SDK.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/SDK/keysymdef.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Zero.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Zero.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/main.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

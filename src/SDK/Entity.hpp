@@ -2,7 +2,9 @@
 #define RASPTERNAL_ENTITY_HPP
 
 struct Entity {
-    char pad[0x128]; // 0x0
+    char pad[0x94]; // 0x0
+    int index; // 0x94
+    char pad4[0x90]; // 0x98
     int teamNum; // 0x128
     char pad2[0x8]; // 0x12C
     int health; // 0x134
