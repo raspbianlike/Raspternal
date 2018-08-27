@@ -10,7 +10,7 @@ Raspternal - Small external cheat
 $ git clone https://github.com/Marc3842h/Spookware.git
 $ cmake . && make
 # Start Steam and launch CS:GO and join a server
-$ sudo cmake-build-debug/./Raspternal // TODO: make this not build in debug all the time
+$ sudo cmake-build-debug/./Raspternal # TODO: make this not build in debug all the time
 ```
 
 
