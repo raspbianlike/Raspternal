@@ -3,7 +3,7 @@ Raspternal - Small external cheat
 ### Installation
 
 * **Arch**: `base-devel cmake clang gdb git sdl2 lua xdotool patchelf sdl2_image` 
-// not sure if all of them are needed i pasted this readme
+not sure if all of them are needed i pasted this readme
 
 ### Compiling
 
