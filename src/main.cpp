@@ -39,7 +39,8 @@ enum operations {
 };
 enum modules {
     glow,
-    bhop
+    bhop,
+    triggerbot
 };
 
 void ProcessCommand(string message) {
@@ -62,7 +63,7 @@ void ProcessCommand(string message) {
             break;
         case module:
             // check for module name and perform operation on it
-            if(parts.size() < 3) {
+            if (parts.size() < 3) {
                 Logger::Error("Unknown command!");
                 return;
             }
@@ -71,6 +72,8 @@ void ProcessCommand(string message) {
                 mod = glow;
             else if (parts[1] == "bhop")
                 mod = bhop;
+            else if (parts[1] == "triggerbot")
+                mod = triggerbot;
             if (parts[2] == "enable")
                 operation = enable;
             else if (parts[2] == "disable")
@@ -88,6 +91,12 @@ void ProcessCommand(string message) {
                         Glow::Start();
                     else if (operation == disable)
                         Glow::Stop();
+                    break;
+                case triggerbot:
+                    if (operation == enable)
+                        Triggerbot::Start();
+                    else if (operation == disable)
+                        Triggerbot::Stop();
                     break;
                 default:
                     Logger::Error("Unknown command!");
@@ -117,7 +126,7 @@ int main() {
      * module disable [module]
      *
      */
-    Triggerbot::Start();
+
     XInitThreads();
     printf("\n");
     char input[128];

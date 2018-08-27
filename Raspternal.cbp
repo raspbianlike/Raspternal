@@ -78,6 +78,12 @@
 		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Glow.hpp">
 			<Option target="Raspternal"/>
 		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Misc.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Misc.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
 		<Unit filename="/home/rasp/CLionProjects/Raspternal/src/Hacks/Triggerbot.cpp">
 			<Option target="Raspternal"/>
 		</Unit>

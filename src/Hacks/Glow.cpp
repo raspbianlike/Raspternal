@@ -20,7 +20,7 @@ void *Glow::Run(void *) {
         //if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity)))
         //    continue;
 
-        for (int i = 1; i < manager.m_GlowObjectDefinitions.Count; i++) {
+        for (int i = 0; i < manager.m_GlowObjectDefinitions.Count; i++) {
             if (!definitions[i].m_pEntity)
                 continue;
 

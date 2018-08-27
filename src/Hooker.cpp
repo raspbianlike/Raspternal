@@ -3,7 +3,7 @@
 void Hooker::Init() {
     csgo.Process("csgo_linux64");
     csgo.ProcessMaps();
-    Logger::Info("Hooker init Finished!");
+    Logger::Info("Sig init Finished!");
 }
 
 void Hooker::FindLocalPlayer() {

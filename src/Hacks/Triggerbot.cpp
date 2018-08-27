@@ -3,7 +3,7 @@
 extern "C" {
 #include <xdo.h>
 }
-static xdo_t *xdo = xdo_new(NULL);
+static xdo_t *xdo = xdo_new(nullptr);
 
 void *Triggerbot::Run(void *) {
     for (;;) {
@@ -21,7 +21,7 @@ void *Triggerbot::Run(void *) {
         if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance + Offsets::LocalPlayer::crosshairID, &crosshairIndex, sizeof(int)))
             continue;
 
-        if (crosshairIndex == 0) { // not aiming to any player, continue
+        if (crosshairIndex == 0) { // not aiming onto any player, continue
             std::this_thread::sleep_for(std::chrono::milliseconds(5));
             continue;
         }
@@ -34,8 +34,20 @@ void *Triggerbot::Run(void *) {
 void Triggerbot::Start() {
     if (!Triggerbot::enabled)
         pthread_create(&triggerbot, nullptr, Run, nullptr);
+    else {
+        Logger::Error("Triggerbot is already enabled!");
+        return;
+    }
+    Logger::Info("Triggerbot has been enabled!");
 }
 
-void Triggerbot::Stop() {
 
+void Triggerbot::Stop() {
+    if (Triggerbot::enabled)
+        pthread_cancel(Triggerbot::triggerbot);
+    else {
+        Logger::Error("Triggerbot is already disabled!");
+        return;
+    }
+    Logger::Info("Triggerbot has been disabled!");
 }
