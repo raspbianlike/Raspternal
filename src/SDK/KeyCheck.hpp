@@ -5,10 +5,12 @@
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
 
-inline Display *disp = XOpenDisplay(nullptr);
+inline Display *disp = nullptr;
 
 namespace KeyCheck {
-    extern bool IsButtonDown(KeySym keySym);
+    void Init();
+
+    bool IsButtonDown(KeySym keySym);
 }
 
 

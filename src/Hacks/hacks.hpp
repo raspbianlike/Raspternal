@@ -6,5 +6,6 @@
 #include "Glow.hpp"
 #include "BHop.hpp"
 #include "Triggerbot.hpp"
+#include "NoFlash.hpp"
 
 #endif  // RASPTERNAL_HACKS_HPP

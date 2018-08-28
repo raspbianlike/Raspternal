@@ -1,7 +1,11 @@
 #include "KeyCheck.hpp"
 
-bool KeyCheck::IsButtonDown(KeySym keySym) {
+void KeyCheck::Init() {
+    XInitThreads();
+    disp = XOpenDisplay(nullptr);
+}
 
+bool KeyCheck::IsButtonDown(KeySym keySym) {
     char szKey[32];
     int iKeyCodeToFind = XKeysymToKeycode(disp, keySym);
 

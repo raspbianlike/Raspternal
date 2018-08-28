@@ -38,9 +38,11 @@ enum operations {
     disable
 };
 enum modules {
+    all,
     glow,
     bhop,
-    triggerbot
+    triggerbot,
+    noflash
 };
 
 void ProcessCommand(string message) {
@@ -74,12 +76,29 @@ void ProcessCommand(string message) {
                 mod = bhop;
             else if (parts[1] == "triggerbot")
                 mod = triggerbot;
+            else if (parts[1] == "noflash")
+                mod = noflash;
+            else if (parts[1] == "all")
+                mod = all;
             if (parts[2] == "enable")
                 operation = enable;
             else if (parts[2] == "disable")
                 operation = disable;
 
             switch (mod) {
+                case all:
+                    if (operation == enable) {
+                        BHop::Start();
+                        Glow::Start();
+                        Triggerbot::Start();
+                        NoFlash::Start();
+                    } else if (operation == disable) {
+                        BHop::Stop();
+                        Glow::Stop();
+                        Triggerbot::Stop();
+                        NoFlash::Stop();
+                    }
+                    break;
                 case bhop:
                     if (operation == enable)
                         BHop::Start();
@@ -98,6 +117,12 @@ void ProcessCommand(string message) {
                     else if (operation == disable)
                         Triggerbot::Stop();
                     break;
+                case noflash:
+                    if (operation == enable)
+                        NoFlash::Start();
+                    else if (operation == disable)
+                        NoFlash::Stop();
+                    break;
                 default:
                     Logger::Error("Unknown command!");
             }
@@ -108,6 +133,7 @@ void ProcessCommand(string message) {
 }
 
 void Init() {
+    KeyCheck::Init();
     Hooker::Init();
     Hooker::FindLocalPlayer();
     Hooker::FindForceJumpAddress();
@@ -127,7 +153,6 @@ int main() {
      *
      */
 
-    XInitThreads();
     printf("\n");
     char input[128];
     for (;;) {
