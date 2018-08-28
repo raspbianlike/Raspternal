@@ -22,7 +22,7 @@ void *Triggerbot::Run(void *) {
             continue;
 
         if (crosshairIndex == 0) { // not aiming onto any player, continue
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
             continue;
         }
         if (KeyCheck::IsButtonDown(XK_Alt_L))
@@ -32,22 +32,24 @@ void *Triggerbot::Run(void *) {
 }
 
 void Triggerbot::Start() {
-    if (!Triggerbot::enabled)
+    if (!enabled)
         pthread_create(&triggerbot, nullptr, Run, nullptr);
     else {
         Logger::Error("Triggerbot is already enabled!");
         return;
     }
     Logger::Info("Triggerbot has been enabled!");
+    enabled = true;
 }
 
 
 void Triggerbot::Stop() {
-    if (Triggerbot::enabled)
+    if (enabled)
         pthread_cancel(Triggerbot::triggerbot);
     else {
         Logger::Error("Triggerbot is already disabled!");
         return;
     }
     Logger::Info("Triggerbot has been disabled!");
+    enabled = false;
 }

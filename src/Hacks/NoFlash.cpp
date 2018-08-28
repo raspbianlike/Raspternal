@@ -32,6 +32,7 @@ void NoFlash::Start() {
         return;
     }
     Logger::Info("NoFlash has been enabled!");
+    enabled = true;
 }
 
 void NoFlash::Stop() {
@@ -42,4 +43,5 @@ void NoFlash::Stop() {
         return;
     }
     Logger::Info("NoFlash has been disabled!");
+    enabled = false;
 }

@@ -1,12 +1,12 @@
 #include "Glow.hpp"
 
 struct Glow::GlowObjectDefinition_t definitions[1024];
+Glow::CGlowObjectManager manager;
 
 void *Glow::Run(void *) {
     for (;;) {
         memset(definitions, NULL, sizeof(definitions));
-        //bzero(definitions, sizeof(definitions));
-        CGlowObjectManager manager;
+        memset(&manager, NULL, sizeof(manager));
 
         if (!csgo.ReadBuffer(Offsets::GlowManager::memoryAddress, &manager, sizeof(CGlowObjectManager))) {
             Logger::Error("Failed reading stuff!");
@@ -33,7 +33,7 @@ void *Glow::Run(void *) {
                                  sizeof(Entity))) // could basically be used as a temporary entitylist replacement until entitylist is implemented
                 continue;
 
-            if (ent.health < 1 || (ent.teamNum != 2 && ent.teamNum != 3)) {
+            if (ent.health < 1 || (ent.teamNum != 2 && ent.teamNum != 3)) { // check if entity belongs to players 'and' if its a player, can also draw weapons n shit with this
                 definitions[i].m_bRenderWhenOccluded = false;
                 definitions[i].m_bRenderWhenUnoccluded = false;
                 continue;
@@ -48,7 +48,7 @@ void *Glow::Run(void *) {
                 definitions[i].m_bRenderWhenUnoccluded = 1;
             }
             else */
-            if (definitions[i].m_bRenderWhenOccluded)
+            if (definitions[i].m_bRenderWhenOccluded) // dont set stuff again
                 continue;
 
             if (ent.teamNum == localPlayer.teamNum) { // teammates blue
@@ -73,23 +73,23 @@ void *Glow::Run(void *) {
 }
 
 void Glow::Start() {
-    if (!Glow::enabled)
+    if (!enabled)
         pthread_create(&glow, nullptr, Run, nullptr); // maybe switch to std::thread?
     else {
         Logger::Error("Glow is already enabled!");
         return;
     }
     Logger::Info("Glow has been enabled!");
-    Glow::enabled = true;
+    enabled = true;
 }
 
 void Glow::Stop() {
-    if (Glow::enabled)
+    if (enabled)
         pthread_cancel(glow);
     else {
         Logger::Error("Glow is already disabled!");
         return;
     }
     Logger::Info("Glow has been disabled!");
-    Glow::enabled = false;
+    enabled = false;
 }

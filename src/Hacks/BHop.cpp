@@ -31,23 +31,23 @@ void *BHop::Run(void *) {
 }
 
 void BHop::Start() {
-    if (!BHop::enabled)
+    if (!enabled)
         pthread_create(&bhop, nullptr, Run, nullptr);
     else {
         Logger::Error("BHop is already enabled!");
         return;
     }
     Logger::Info("BHop has been enabled!");
-    BHop::enabled = true;
+    enabled = true;
 }
 
 void BHop::Stop() {
-    if (BHop::enabled)
+    if (enabled)
         pthread_cancel(bhop);
     else {
         Logger::Error("BHop is already disabled!");
         return;
     }
     Logger::Info("BHop has been disabled!");
-    BHop::enabled = false;
+    enabled = false;
 }
