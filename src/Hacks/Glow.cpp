@@ -13,7 +13,7 @@ void *Glow::Run(void *) {
             continue;
         }
         size_t c = manager.m_GlowObjectDefinitions.Count;
-        if (!csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c)) {
+        if (!csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c)) { // prevent to read more data than there actually is
             Logger::Error("Failed reading stuff!");
             continue;
         }
@@ -67,7 +67,7 @@ void *Glow::Run(void *) {
                 definitions[i].m_bRenderWhenUnoccluded = false;
             }
         }
-        csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c);
+        csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c); // same as above
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
