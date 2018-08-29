@@ -18,11 +18,15 @@
 
 class Logger {
 public:
-    static void Address(const char* str, uintptr_t address);
+    static void Address(const char *str, uintptr_t address);
+
     static void CLI();
-    static void Info(const char* str);
-    static void Error(const char* str);
-    static void Warning(const char* str);
+
+    static void Info(const char *str);
+
+    static void Error(const char *str);
+
+    static void Warning(const char *str);
 };
 
 

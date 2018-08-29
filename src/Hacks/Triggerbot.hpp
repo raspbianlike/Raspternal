@@ -3,9 +3,12 @@
 
 #include "../SDK/SDK.hpp"
 #include "../SDK/Entity.hpp"
-#include "../SDK/CBasePlayer.hpp"
+#include "../SDK/CBaseEntity.hpp"
 #include "../SDK/KeyCheck.hpp"
 
+extern "C" {
+#include <xdo.h>
+}
 
 namespace Triggerbot {
     void Start();
@@ -19,6 +22,8 @@ namespace Triggerbot {
     inline bool enabled = false;
 
     inline int crosshairIndex = 0;
+
+    inline xdo_t *xdo = xdo_new(nullptr);
 };
 
 

@@ -1,16 +1,6 @@
 #include "Zero.hpp"
-#include "Logger.hpp"
-#include "Hooker.hpp"
 
 #include "Hacks/hacks.hpp"
-
-#include <iostream>
-#include <link.h>
-#include <thread>
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Intrinsic.h>
-#include <X11/extensions/XTest.h>
 
 using namespace std;
 

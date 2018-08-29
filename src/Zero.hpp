@@ -57,7 +57,7 @@ public:
 
     mapInfo FindModuleInfo(const char *name);
 
-    uintptr_t FindPattern(const char *pattern, const char *mask, const char *module, const char* name);
+    uintptr_t FindPattern(const char *pattern, const char *mask, const char *module, const char *name);
 
     uintptr_t GetCallAddress(uintptr_t ptr);
 };

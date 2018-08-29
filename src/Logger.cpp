@@ -4,6 +4,7 @@
 void Logger::Address(const char *str, uintptr_t address) {
     printf(ADDRESS_TITLE RESET BOLD "%s" CYAN " [" MAGENTA "%p" CYAN "]" RESET "\n", str, address);
 }
+
 void Logger::CLI() {
     printf(BOLD WHITE CYAN "[" RESET "Raspternal" BOLD CYAN "]$ " RESET);
 }

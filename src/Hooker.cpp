@@ -39,8 +39,11 @@ void Hooker::FindEntityList() {
                                                    "xxx????xxxxxxxx????xxxxxx", "client_panorama_client.so", "entitylist");
     uintptr_t g_ppEntityList = csgo.GetCallAddress(g_ppEntityListMov + 0x2);
     uintptr_t g_pEntityList;
+    uintptr_t entityList;
 
     csgo.ReadBuffer(g_ppEntityList, &g_pEntityList, sizeof(uintptr_t));
+    csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
-    Offsets::EntityList::entityListPointer = g_pEntityList;
+    Offsets::EntityList::entityListPointer = entityList;
+    Logger::Address("EntityListAddress", entityList);
 }

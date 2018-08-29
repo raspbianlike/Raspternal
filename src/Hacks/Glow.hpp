@@ -3,7 +3,7 @@
 
 #include "../SDK/Entity.hpp"
 #include "../SDK/SDK.hpp"
-#include "../SDK/CBasePlayer.hpp"
+#include "../SDK/CBaseEntity.hpp"
 #include "Triggerbot.hpp"
 
 namespace Glow {

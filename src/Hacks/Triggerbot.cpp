@@ -1,10 +1,5 @@
 #include "Triggerbot.hpp"
 
-extern "C" {
-#include <xdo.h>
-}
-static xdo_t *xdo = xdo_new(nullptr);
-
 void *Triggerbot::Run(void *) {
     for (;;) {
         // update localPlayer;
@@ -24,6 +19,12 @@ void *Triggerbot::Run(void *) {
             std::this_thread::sleep_for(std::chrono::milliseconds(2));
             continue;
         }
+
+        Entity ent = CBaseEntity::GetEntity(crosshairIndex);
+
+        if (ent.teamNum == localPlayer.teamNum)
+            continue;
+
         if (KeyCheck::IsButtonDown(XK_Alt_L))
             xdo_click_window(xdo, CURRENTWINDOW, 1);
         std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -37,6 +38,7 @@ void Triggerbot::Start() {
         Logger::Error("Triggerbot is already enabled!");
         return;
     }
+    //Logger::Info("Triggerbot is currently in maintance!");
     Logger::Info("Triggerbot has been enabled!");
     enabled = true;
 }

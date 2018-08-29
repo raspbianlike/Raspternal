@@ -77,7 +77,7 @@ mapInfo Zero::FindModuleInfo(const char *name) {
     return mapInfo{};
 }
 
-uintptr_t Zero::FindPattern(const char *pattern, const char *mask, const char *module, const char* name) {
+uintptr_t Zero::FindPattern(const char *pattern, const char *mask, const char *module, const char *name) {
     char buffer[0x500];
     mapInfo current = this->FindModuleInfo(module);
 

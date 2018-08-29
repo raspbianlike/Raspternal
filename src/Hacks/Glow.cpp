@@ -25,49 +25,42 @@ void *Glow::Run(void *) {
         //if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity)))
         //    continue;
 
-        for (int i = 0; i < c; i++) {
+        for (size_t i = 0; i < c; i++) {
             if (!definitions[i].m_pEntity)
                 continue;
 
             Entity ent;
-            if (!csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent,
-                                 sizeof(Entity))) // could basically be used as a temporary entitylist replacement until entitylist is implemented
+            if (!csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity)))
                 continue;
 
-            if (ent.health < 1 || (ent.teamNum != 2 && ent.teamNum != 3)) { // check if entity belongs to players 'and' if its a player, can also draw weapons n shit with this
+            if (ent.teamNum != 2 && ent.teamNum != 3 && !ent.flags) { // check if entity belongs to teams 'and' if its a player, can also draw weapons n shit with this
                 definitions[i].m_bRenderWhenOccluded = false;
                 definitions[i].m_bRenderWhenUnoccluded = false;
                 continue;
             }
 
-            /*if (ent.health < 1 && !ent.teamNum) { // draw weapons white
-                definitions[i].r = 1.0f;
-                definitions[i].g = 1.0f;
-                definitions[i].b = 1.0f;
-                definitions[i].a = 1.0f;
-                definitions[i].m_bRenderWhenOccluded = 1;
-                definitions[i].m_bRenderWhenUnoccluded = 1;
-            }
-            else */
             if (definitions[i].m_bRenderWhenOccluded) // dont set stuff again
                 continue;
 
             if (ent.teamNum == localPlayer.teamNum) { // teammates blue
                 definitions[i].b = 1.0f;
-                definitions[i].a = 1.0f;
-                definitions[i].m_bRenderWhenOccluded = true;
-                definitions[i].m_bRenderWhenUnoccluded = false;
-            } else { // enemies red
+            } else if (ent.teamNum != localPlayer.teamNum) { // enemies red / reen
                 if (Triggerbot::crosshairIndex == ent.index) {
                     definitions[i].g = 1.0f;
-                    definitions[i].a = 1.0f;
                 } else {
                     definitions[i].r = 1.0f;
-                    definitions[i].a = 1.0f;
                 }
-                definitions[i].m_bRenderWhenOccluded = true;
-                definitions[i].m_bRenderWhenUnoccluded = false;
             }
+
+            if (!ent.health) { // weapons white: this seems to crash randomly, TODO: Debug
+                definitions[i].r = 1.0f;
+                definitions[i].g = 1.0f;
+                definitions[i].b = 1.0f;
+                //definitions[i].m_bRenderWhenUnoccluded = true;
+            }
+
+            definitions[i].a = 1.0f;
+            definitions[i].m_bRenderWhenOccluded = true;
         }
         csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c); // same as above
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
