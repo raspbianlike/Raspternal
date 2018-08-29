@@ -44,7 +44,7 @@ void *Glow::Run(void *) {
 
             if (ent.teamNum == localPlayer.teamNum) { // teammates blue
                 definitions[i].b = 1.0f;
-            } else if (ent.teamNum != localPlayer.teamNum) { // enemies red / reen
+            } else { // enemies red / reen
                 if (Triggerbot::crosshairIndex == ent.index) {
                     definitions[i].g = 1.0f;
                 } else {
