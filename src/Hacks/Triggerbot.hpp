@@ -17,6 +17,8 @@ namespace Triggerbot {
     inline pthread_t triggerbot;
 
     inline bool enabled = false;
+
+    inline int crosshairIndex = 0;
 };
 
 

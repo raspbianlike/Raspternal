@@ -13,7 +13,8 @@ void *Glow::Run(void *) {
             continue;
         }
         size_t c = manager.m_GlowObjectDefinitions.Count;
-        if (!csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c)) { // prevent to read more data than there actually is
+        if (!csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions,
+                             sizeof(GlowObjectDefinition_t) * c)) { // prevent to read more data than there actually is
             Logger::Error("Failed reading stuff!");
             continue;
         }
@@ -52,17 +53,18 @@ void *Glow::Run(void *) {
                 continue;
 
             if (ent.teamNum == localPlayer.teamNum) { // teammates blue
-                definitions[i].r = 0.0f;
-                definitions[i].g = 0.0f;
                 definitions[i].b = 1.0f;
                 definitions[i].a = 1.0f;
                 definitions[i].m_bRenderWhenOccluded = true;
                 definitions[i].m_bRenderWhenUnoccluded = false;
             } else { // enemies red
-                definitions[i].r = 1.0f;
-                definitions[i].g = 0.0f;
-                definitions[i].b = 0.0f;
-                definitions[i].a = 1.0f;
+                if (Triggerbot::crosshairIndex == ent.index) {
+                    definitions[i].g = 1.0f;
+                    definitions[i].a = 1.0f;
+                } else {
+                    definitions[i].r = 1.0f;
+                    definitions[i].a = 1.0f;
+                }
                 definitions[i].m_bRenderWhenOccluded = true;
                 definitions[i].m_bRenderWhenUnoccluded = false;
             }

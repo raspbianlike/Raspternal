@@ -17,7 +17,6 @@ void *Triggerbot::Run(void *) {
             continue;
         }
 
-        int crosshairIndex = 0;
         if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance + Offsets::LocalPlayer::crosshairID, &crosshairIndex, sizeof(int)))
             continue;
 

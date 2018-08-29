@@ -4,6 +4,8 @@
 #include "../SDK/Entity.hpp"
 #include "../SDK/SDK.hpp"
 #include "../SDK/CBasePlayer.hpp"
+#include "Triggerbot.hpp"
+
 namespace Glow {
     template<class T>
     class CUtlVector {
