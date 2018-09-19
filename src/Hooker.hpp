@@ -2,7 +2,7 @@
 #define RASPTERNAL_HOOKER_HPP
 
 #include "Zero.hpp"
-#include "Logger.hpp"
+#include "Helpers/Helpers.hpp"
 
 inline Zero csgo;
 
