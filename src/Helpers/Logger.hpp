@@ -14,7 +14,7 @@
 #define BOLD        "\x1B[1m"
 #define UNDERLINE    "\x1B[4m"
 
-#include "Zero.hpp"
+#include "../Zero.hpp"
 
 class Logger {
 public:
