@@ -29,6 +29,7 @@ enum operations {
 };
 enum modules {
     all,
+    list,
     glow,
     bhop,
     triggerbot,
@@ -55,11 +56,13 @@ void ProcessCommand(string message) {
             break;
         case module:
             // check for module name and perform operation on it
-            if (parts.size() < 3) {
+            if (parts.size() < 2) {
                 Logger::Error("Unknown command!");
                 return;
             }
 
+            if (parts[1] == "list")
+                mod = list;
             if (parts[1] == "glow")
                 mod = glow;
             else if (parts[1] == "bhop")
@@ -70,10 +73,13 @@ void ProcessCommand(string message) {
                 mod = noflash;
             else if (parts[1] == "all")
                 mod = all;
-            if (parts[2] == "enable")
-                operation = enable;
-            else if (parts[2] == "disable")
-                operation = disable;
+
+            if (mod != list) {
+                if (parts[2] == "enable")
+                    operation = enable;
+                else if (parts[2] == "disable")
+                    operation = disable;
+            }
 
             switch (mod) {
                 case all:
@@ -88,6 +94,9 @@ void ProcessCommand(string message) {
                         Triggerbot::Stop();
                         NoFlash::Stop();
                     }
+                    break;
+                case list:
+                    Logger::Modules();
                     break;
                 case bhop:
                     if (operation == enable)

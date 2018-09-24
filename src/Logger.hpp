@@ -22,7 +22,9 @@ public:
 
     static void CLI();
 
-    static void Info(const char *str);
+    static void Info(const char *str, ...);
+
+    static void Modules();
 
     static void Error(const char *str);
 

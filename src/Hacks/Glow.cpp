@@ -33,14 +33,11 @@ void *Glow::Run(void *) {
             if (!csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity)))
                 continue;
 
-            if (ent.teamNum != 2 && ent.teamNum != 3 && !ent.flags) { // check if entity belongs to teams 'and' if its a player, can also draw weapons n shit with this
+            if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant || !ent.health) {
                 definitions[i].m_bRenderWhenOccluded = false;
                 definitions[i].m_bRenderWhenUnoccluded = false;
                 continue;
             }
-
-            if (definitions[i].m_bRenderWhenOccluded) // dont set stuff again
-                continue;
 
             if (ent.teamNum == localPlayer.teamNum) { // teammates blue
                 definitions[i].b = 1.0f;
@@ -51,13 +48,14 @@ void *Glow::Run(void *) {
                     definitions[i].r = 1.0f;
                 }
             }
-
-            if (!ent.health) { // weapons white: this seems to crash randomly, TODO: Debug
+            if (ent.health);
+            //Logger::Address("Entity", (uintptr_t) definitions[i].m_pEntity);
+            /*if (!ent.health) { // weapons white: this seems to crash randomly, TODO: Debug
                 definitions[i].r = 1.0f;
                 definitions[i].g = 1.0f;
                 definitions[i].b = 1.0f;
-                //definitions[i].m_bRenderWhenUnoccluded = true;
-            }
+                definitions[i].m_bRenderWhenUnoccluded = false;
+            }*/
 
             definitions[i].a = 1.0f;
             definitions[i].m_bRenderWhenOccluded = true;
