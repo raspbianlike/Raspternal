@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Raspternal"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Raspternal">
+				<Option output="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Raspternal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 Raspternal"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Raspternal/fast">
+				<Option output="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Raspternal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/raspbian/CLionProjects/Raspternal/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1/x86_64-pc-linux-gnu"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../include/c++/8.2.1/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.1/include-fixed"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 Raspternal/fast"/>
+					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j2 -f &quot;/home/raspbian/CLionProjects/Raspternal/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/BHop.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/BHop.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/Glow.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/Glow.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/NoFlash.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/NoFlash.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/Triggerbot.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/Triggerbot.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hacks/hacks.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Helpers/Helpers.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Helpers/Logger.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Helpers/Logger.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hooker.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Hooker.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/CBaseEntity.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/CBaseEntity.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/Entity.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/KeyCheck.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/KeyCheck.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/SDK.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/SDK/keysymdef.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Zero.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/Zero.hpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/src/main.cpp">
+			<Option target="Raspternal"/>
+		</Unit>
+		<Unit filename="/home/raspbian/CLionProjects/Raspternal/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

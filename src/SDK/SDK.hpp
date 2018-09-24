@@ -4,6 +4,8 @@
 #include "../Zero.hpp"
 #include "../Hooker.hpp"
 
+#include "../Helpers/Helpers.hpp"
+
 #include "thread"
 #include <pthread.h>
 #include "keysymdef.hpp"
