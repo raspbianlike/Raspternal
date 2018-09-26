@@ -17,16 +17,34 @@ void *BHop::Run(void *) {
         if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity)))
             continue;
 
-        if (localPlayer.flags != 257) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        int jumpFlag;
+        if (!csgo.ReadBuffer(Offsets::Jump::IN_JUMP, &jumpFlag, sizeof(int)))
             continue;
+        //printf("jumpflag %i\n", jumpFlag);
+        /*jumpFlag &= ~jumpFlag;
+        printf("2 %i\n", jumpFlag);*/
+        //value
+        /* printf("flags: %i\n", localPlayer.flags);
+         printf("flag: %i\n", jumpFlag & (1 << 0));
+         printf("flagV: %i\n", jumpFlag);
+         printf("---------------------------------:\n");*/
+
+        if (jumpFlag & (1 << 0)) {
+            if (!(localPlayer.flags & (1<<0))) {
+                jumpFlag &= ~(1 << 0);
+                csgo.WriteBuffer(Offsets::Jump::IN_JUMP, &jumpFlag, sizeof(int));
+            }
         }
 
-        if (KeyCheck::IsButtonDown(XK_space)) {  // might want to add a check if the cursor is enabled, but were fine for now
+        /*if (localPlayer.flags == 257) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+            continue;
+        }*/
+        /*if (KeyCheck::IsButtonDown(XK_space)) {  // might want to add a check if the cursor is enabled, but were fine for now
             csgo.WriteBuffer(Offsets::Jump::IN_JUMP, &jump, sizeof(int));
             std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        } else
-            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+        } else*/
+        //std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
 }
 

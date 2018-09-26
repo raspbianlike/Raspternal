@@ -18,24 +18,24 @@ namespace Glow {
     };
 
     struct GlowObjectDefinition_t {
-        void *m_pEntity;
-        float r;
-        float g;
-        float b;
-        float a;
-        uint8_t pad[16];
-        bool m_bRenderWhenOccluded : 8;
-        bool m_bRenderWhenUnoccluded : 8;
-        bool m_bFullBloomRender : 8;
-        unsigned char pad2;
-        int m_nFullBloomStencilTestValue;
-        int m_nSplitScreenSlot;
-        int m_nNextFreeSlot;
-        unsigned char pad3[4];
+        void *m_pEntity; // 0x0
+        float r; // 0x8
+        float g; // 0xC
+        float b; // 0x10
+        float a; // 0x14
+        uint8_t pad[0x10]; // 0x18
+        bool m_bRenderWhenOccluded : 8; // 0x28
+        bool m_bRenderWhenUnoccluded : 8; // 0x29
+        bool m_bFullBloomRender : 8; // 0x2A
+        unsigned char pad2; // 0x2B
+        int m_nFullBloomStencilTestValue; // 0x2C
+        int m_nSplitScreenSlot; // 0x30
+        int m_nNextFreeSlot; // 0x34
+        unsigned char pad3[0x4]; // 0x38
 
         static const int END_OF_FREE_LIST = -1;
         static const int ENTRY_IN_USE = -2;
-    }; // sizeof() == 0x34
+    }; // sizeof() == 0x40
 
     class CGlowObjectManager {
     public:

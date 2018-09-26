@@ -33,34 +33,27 @@ void *Glow::Run(void *) {
             if (!csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity)))
                 continue;
 
-            if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant || !ent.health) {
-                definitions[i].m_bRenderWhenOccluded = false;
-                definitions[i].m_bRenderWhenUnoccluded = false;
+            if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant) {
                 continue;
             }
+            std::array<float, 4> col = {0.0f, 1.0f, 0.0f, 1.0f};
+            if (!ent.health)
+                col = {1.0f, 1.0f, 1.0f, 1.0f};
 
-            if (ent.teamNum == localPlayer.teamNum) { // teammates blue
-                definitions[i].b = 1.0f;
-            } else { // enemies red / reen
-                if (Triggerbot::crosshairIndex == ent.index) {
-                    definitions[i].g = 1.0f;
-                } else {
-                    definitions[i].r = 1.0f;
-                }
+            if (ent.teamNum == localPlayer.teamNum && ent.health)  // teammates blue
+                col = {0.0f, 0.0f, 1.0f, 1.0f};
+            else if (ent.health) { // enemies red / reen
+                if (Triggerbot::crosshairIndex == ent.index)
+                    col = {0.0f, 1.0f, 0.0f, 1.0f};
+                else
+                    col = {1.0f, 0.0f, 0.0f, 1.0f};
             }
-            if (ent.health);
-            //Logger::Address("Entity", (uintptr_t) definitions[i].m_pEntity);
-            /*if (!ent.health) { // weapons white: this seems to crash randomly, TODO: Debug
-                definitions[i].r = 1.0f;
-                definitions[i].g = 1.0f;
-                definitions[i].b = 1.0f;
-                definitions[i].m_bRenderWhenUnoccluded = false;
-            }*/
 
-            definitions[i].a = 1.0f;
-            definitions[i].m_bRenderWhenOccluded = true;
+            static bool render = true;
+            csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x8, &col, sizeof(float) * 4);
+            csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x28, &render, sizeof(bool));
+
         }
-        csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c); // same as above
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
