@@ -3,7 +3,7 @@
 struct Glow::GlowObjectDefinition_t definitions[1024];
 Glow::CGlowObjectManager manager;
 
-void *Glow::Run(void *) {
+void Glow::Run() {
     for (;;) {
         memset(definitions, NULL, sizeof(definitions));
         memset(&manager, NULL, sizeof(manager));
@@ -57,7 +57,7 @@ void *Glow::Run(void *) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
-
+/*
 void Glow::Start() {
     if (!enabled)
         pthread_create(&glow, nullptr, Run, nullptr); // maybe switch to std::thread?
@@ -78,4 +78,4 @@ void Glow::Stop() {
     }
     Logger::Info("Glow has been disabled!");
     enabled = false;
-}
+}*/

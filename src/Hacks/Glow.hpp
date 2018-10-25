@@ -5,6 +5,7 @@
 #include "../SDK/SDK.hpp"
 #include "../SDK/CBaseEntity.hpp"
 #include "Triggerbot.hpp"
+#include "../settings.hpp"
 
 namespace Glow {
     template<class T>
@@ -48,15 +49,7 @@ namespace Glow {
         unsigned int unk5; // 0028 (054612E8)
     };
 
-    void Start();
-
-    void Stop();
-
-    void *Run(void *);
-
-    inline pthread_t glow;
-
-    inline bool enabled = false;
+    void Run();
 }
 
 

@@ -3,7 +3,7 @@
 
 #include "../SDK/SDK.hpp"
 #include "../SDK/Entity.hpp"
-#include "../SDK/KeyCheck.hpp"
+#include "../SDK/Keyboard.hpp"
 
 namespace BHop {
     void Start();

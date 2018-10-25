@@ -86,12 +86,12 @@ void ProcessCommand(string message) {
                 case all:
                     if (operation == enable) {
                         BHop::Start();
-                        Glow::Start();
+                        Glow::Run();
                         Triggerbot::Start();
                         NoFlash::Start();
                     } else if (operation == disable) {
                         BHop::Stop();
-                        Glow::Stop();
+                        //Glow::Stop();
                         Triggerbot::Stop();
                         NoFlash::Stop();
                     }
@@ -107,9 +107,9 @@ void ProcessCommand(string message) {
                     break;
                 case glow:
                     if (operation == enable)
-                        Glow::Start();
+                        Glow::Run();
                     else if (operation == disable)
-                        Glow::Stop();
+                        //Glow::Stop();
                     break;
                 case triggerbot:
                     if (operation == enable)
@@ -133,7 +133,7 @@ void ProcessCommand(string message) {
 }
 
 void Init() {
-    KeyCheck::Init();
+    keyboard.Init();
     Hooker::Init();
     Hooker::FindLocalPlayer();
     Hooker::FindForceJumpAddress();
@@ -144,6 +144,7 @@ void Init() {
 }
 
 int main() {
+    //*(int*) 0x0 = 0;
     Init();
 
     /*

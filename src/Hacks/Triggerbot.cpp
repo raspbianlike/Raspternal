@@ -25,7 +25,7 @@ void *Triggerbot::Run(void *) {
         if (ent.teamNum == localPlayer.teamNum)
             continue;
 
-        if (KeyCheck::IsButtonDown(XK_Alt_L))
+        if (keyboard.IsButtonDown(1))
             xdo_click_window(xdo, CURRENTWINDOW, 1);
         std::this_thread::sleep_for(std::chrono::milliseconds(2));
     }
