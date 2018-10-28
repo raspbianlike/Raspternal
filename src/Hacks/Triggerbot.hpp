@@ -11,13 +11,9 @@ extern "C" {
 }
 
 namespace Triggerbot {
-    void Start();
+    void Enable();
 
-    void Stop();
-
-    void *Run(void *);
-
-    inline pthread_t triggerbot;
+    void Run();
 
     inline bool enabled = false;
 

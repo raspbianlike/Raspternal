@@ -1,7 +1,6 @@
 #include "Zero.hpp"
 
 #include "Hacks/hacks.hpp"
-#include <cstddef>
 
 using namespace std;
 
@@ -38,12 +37,13 @@ enum modules {
 };
 
 void ProcessCommand(string message) {
+    // this does not work yet
     vector<string> parts;
     parts = split(message, ' ');
 
     cmds cmd;
     modules mod;
-    operations operation;
+    operations operation = enable;
     // check first parts
     if (parts[0] == "help") {
         cmd = help;
@@ -57,14 +57,14 @@ void ProcessCommand(string message) {
             break;
         case module:
             // check for module name and perform operation on it
-            if (parts.size() < 2) {
+            if (parts.size() < 1) {
                 Logger::Error("Unknown command!");
                 return;
             }
 
             if (parts[1] == "list")
                 mod = list;
-            if (parts[1] == "glow")
+            else if (parts[1] == "glow")
                 mod = glow;
             else if (parts[1] == "bhop")
                 mod = bhop;
@@ -85,43 +85,31 @@ void ProcessCommand(string message) {
             switch (mod) {
                 case all:
                     if (operation == enable) {
-                        BHop::Start();
-                        Glow::Run();
-                        Triggerbot::Start();
-                        NoFlash::Start();
+                        Misc::BHop::Enable();
+                        Glow::Enable();
+                        Triggerbot::Enable();
+                        Misc::NoFlash::Enable();
                     } else if (operation == disable) {
-                        BHop::Stop();
-                        //Glow::Stop();
-                        Triggerbot::Stop();
-                        NoFlash::Stop();
+                        Misc::BHop::Enable();
+                        Glow::Enable();
+                        Triggerbot::Enable();
+                        Misc::NoFlash::Enable();
                     }
                     break;
                 case list:
                     Logger::Modules();
                     break;
                 case bhop:
-                    if (operation == enable)
-                        BHop::Start();
-                    else if (operation == disable)
-                        BHop::Stop();
+                    Misc::BHop::Enable();
                     break;
                 case glow:
-                    if (operation == enable)
-                        Glow::Run();
-                    else if (operation == disable)
-                        //Glow::Stop();
+                    Glow::Enable();
                     break;
                 case triggerbot:
-                    if (operation == enable)
-                        Triggerbot::Start();
-                    else if (operation == disable)
-                        Triggerbot::Stop();
+                    Triggerbot::Enable();
                     break;
                 case noflash:
-                    if (operation == enable)
-                        NoFlash::Start();
-                    else if (operation == disable)
-                        NoFlash::Stop();
+                    Misc::NoFlash::Enable();
                     break;
                 default:
                     Logger::Error("Unknown command!");
@@ -146,13 +134,6 @@ void Init() {
 int main() {
     //*(int*) 0x0 = 0;
     Init();
-
-    /*
-     *
-     * module enable [module]
-     * module disable [module]
-     *
-     */
 
     printf("\n");
     char input[128];

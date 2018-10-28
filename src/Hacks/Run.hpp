@@ -2,6 +2,8 @@
 #define RASPTERNAL_RUN_HPP
 
 
+#include "hacks.hpp"
+
 namespace Run {
     static void Run();
 }
