@@ -33,7 +33,7 @@ public:
 
         if (rB != size) {
             printf("Read invalid amount of bytes from %p! Reading failed!\n", address);
-            return false;
+            throw 1;
         }
         return true;
     }
@@ -46,7 +46,7 @@ public:
 
         if (wB != size) {
             printf("Wrote invalid amount of bytes to %p! Writing failed!\n", address);
-            return false;
+            throw 1;
         }
         return true;
     }
