@@ -5,7 +5,7 @@
 #include "hacks.hpp"
 
 namespace Run {
-    static void Run();
+    void Run();
 }
 
 

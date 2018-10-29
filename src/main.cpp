@@ -1,6 +1,7 @@
 #include "Zero.hpp"
 
 #include "Hacks/hacks.hpp"
+#include "Hacks/Run.hpp"
 
 using namespace std;
 
@@ -129,12 +130,13 @@ void Init() {
     Hooker::FindEntityList();
 
     Logger::Info("Init finished!");
+    std::thread Run(Run::Run);
+    Run.detach();
 }
 
 int main() {
     //*(int*) 0x0 = 0;
     Init();
-
     printf("\n");
     char input[128];
     for (;;) {

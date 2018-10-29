@@ -25,7 +25,7 @@ public:
     bool IsButtonDown(int key);
 private:
     int fd;
-    bool keystate[];
+    bool keystate[256];
 };
 
 inline Keyboard keyboard;

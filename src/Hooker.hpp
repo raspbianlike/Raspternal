@@ -11,9 +11,9 @@ namespace Offsets {
         inline uintptr_t instance;
         inline uintptr_t health = 0x134;
         inline uintptr_t flags = 0x138;
-        inline uintptr_t flash = 0xABEC;
+        inline uintptr_t flash = 0xAC10;
         inline uintptr_t shoot = 0xABB0;
-        inline uintptr_t crosshairID = 0xBBE0;
+        inline uintptr_t crosshairID = 0xBC08;
     }
 
     namespace Jump {
@@ -25,7 +25,7 @@ namespace Offsets {
     }
 
     namespace EntityList {
-        inline uintptr_t entityListPointer;
+        inline uintptr_t entityListPointer = NULL;
     }
 }
 

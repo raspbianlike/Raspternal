@@ -37,6 +37,19 @@ void Hooker::FindGlowObjectManager() {
 void Hooker::FindEntityList() {
     uintptr_t g_ppEntityListMov = csgo.FindPattern("\x48\x8B\x1D\x00\x00\x00\x00\x90\x48\x8B\x3B\x4C\x89\xF6\xE8\x00\x00\x00\x00\x48\x85\xC0\x49\x89\xC6",
                                                    "xxx????xxxxxxxx????xxxxxx", "client_panorama_client.so", "entitylist");
+
+    /*
+    push    r12
+    xor     r12d, r12d
+    push    rbx
+    sub     rsp, 18h
+    mov     r13, [rdi+410h]
+    lea     rdi, aSearchingForCl ; "Searching for client entities with clas"...
+    mov     rsi, r13
+    call    _Msg
+    mov     rbx, cs:off_18F79B0 <<-
+    nop
+    */
     uintptr_t g_ppEntityList = csgo.GetCallAddress(g_ppEntityListMov + 0x2);
     uintptr_t g_pEntityList;
     uintptr_t entityList;
@@ -45,5 +58,8 @@ void Hooker::FindEntityList() {
     csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
     Offsets::EntityList::entityListPointer = entityList;
-    Logger::Address("EntityListAddress", entityList);
+    Logger::Address("g_ppEntityList", g_ppEntityList);
+    Logger::Address("g_pEntityList", g_pEntityList);
+    Logger::Address("entityList", Offsets::EntityList::entityListPointer);
+
 }

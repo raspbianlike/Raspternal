@@ -19,9 +19,9 @@ void Keyboard::Run() {
     }
 
     while (true) {
-        struct input_event ev{};
+        struct input_event ev;
         ssize_t n = ::read(this->fd, &ev, sizeof(ev));
-        if (n == (ssize_t) -1 || n != sizeof(ev)) {
+        if (n != sizeof(ev)) {
             break;
         }
 

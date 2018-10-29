@@ -1,10 +1,12 @@
 #include "Run.hpp"
 void Run::Run() {
-    // update global vars like entities, localplayer and such
+    while(true) {
+        // update global vars like entities, localplayer and such
 
-    /* Not implemented yet /shrug*/
+        /* Not implemented yet /shrug*/
 
-    // run hacks
+        // run hacks
 
-    Hacks::Run();
+        Hacks::Run();
+    }
 }

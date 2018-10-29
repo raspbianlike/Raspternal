@@ -11,7 +11,7 @@ void Misc::NoFlash::Run() {
     if(!enabled)
         return;
 
-    csgo.ReadBuffer(Offsets::LocalPlayer::instance + 0xABE8, &flash, sizeof(float)); // this is some sort of "time" that goes from 255 to 0 when flashed, i dont really know
+    csgo.ReadBuffer(Offsets::LocalPlayer::instance + 0xAC0C, &flash, sizeof(float)); // this is some sort of "time" that goes from 255 to 0 when flashed, i dont really know
 
     if (flash <= 0.1f) {
         return;
@@ -32,7 +32,6 @@ void Misc::NoFlash::Enable() {
 
 void Misc::BHop::Run() {
     static int jump = 6;
-
     if(!enabled)
         return;
 
