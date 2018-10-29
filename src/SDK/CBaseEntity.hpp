@@ -4,6 +4,9 @@
 #include "Entity.hpp"
 #include "SDK.hpp"
 
+extern Entity localPlayer;
+extern Entity entities[64];
+
 namespace CBaseEntity {
     extern Entity GetEntity(int index);
 }

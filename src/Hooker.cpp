@@ -58,8 +58,6 @@ void Hooker::FindEntityList() {
     csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
     Offsets::EntityList::entityListPointer = entityList;
-    Logger::Address("g_ppEntityList", g_ppEntityList);
-    Logger::Address("g_pEntityList", g_pEntityList);
     Logger::Address("entityList", Offsets::EntityList::entityListPointer);
 
 }

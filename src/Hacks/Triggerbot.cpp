@@ -1,13 +1,9 @@
 #include "Triggerbot.hpp"
 
 void Triggerbot::Run() {
-    // update localPlayer;
 
     if (!enabled)
         return;
-
-    Entity localPlayer;
-    csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity));
 
     if (localPlayer.health < 1)
         return;

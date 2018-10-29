@@ -5,36 +5,23 @@ Glow::CGlowObjectManager manager;
 
 void Glow::Run() {
 
-    if(!enabled)
+    if (!enabled)
         return;
 
     memset(definitions, NULL, sizeof(definitions));
     memset(&manager, NULL, sizeof(manager));
 
-    if (!csgo.ReadBuffer(Offsets::GlowManager::memoryAddress, &manager, sizeof(CGlowObjectManager))) {
-        Logger::Error("Failed reading stuff!");
-        std::exit(0);
-    }
+    csgo.ReadBuffer(Offsets::GlowManager::memoryAddress, &manager, sizeof(CGlowObjectManager));
+
     size_t c = manager.m_GlowObjectDefinitions.Count;
-    if (!csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions,
-                         sizeof(GlowObjectDefinition_t) * c)) { // prevent to read more data than there actually is
-        Logger::Error("Failed reading stuff!");
-        std::exit(0);
-    }
-    // update localplayer;
-    Entity localPlayer;
-    if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity)))
-        return;
-    //if (!csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity)))
-    //    continue;
+    csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c);
 
     for (size_t i = 0; i < c; i++) {
         if (!definitions[i].m_pEntity)
             continue;
 
         Entity ent;
-        if (!csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity)))
-            continue;
+       csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity));
 
         if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant) {
             continue;
@@ -58,6 +45,7 @@ void Glow::Run() {
 
     }
 }
+
 /*
 void Glow::Start() {
     if (!enabled)

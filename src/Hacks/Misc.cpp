@@ -1,14 +1,12 @@
 #include "Misc.hpp"
-
-Entity localPlayer;
-
+#include "../SDK/CBaseEntity.hpp"
 
 void Misc::NoFlash::Run() {
     static float maxFlashAmount = 70.0f;
     static float writeAmount = maxFlashAmount;
     float flash;
 
-    if(!enabled)
+    if (!enabled)
         return;
 
     csgo.ReadBuffer(Offsets::LocalPlayer::instance + 0xAC0C, &flash, sizeof(float)); // this is some sort of "time" that goes from 255 to 0 when flashed, i dont really know
@@ -32,12 +30,10 @@ void Misc::NoFlash::Enable() {
 
 void Misc::BHop::Run() {
     static int jump = 6;
-    if(!enabled)
+    if (!enabled)
         return;
 
     if (keyboard.IsButtonDown(KEY_SPACE)) { // might want to add a check if the cursor is enabled, but were fine for now
-        memset(&localPlayer, NULL, sizeof(Entity));
-        csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity));
         if (localPlayer.flags == 257) {
             csgo.WriteBuffer(Offsets::Jump::IN_JUMP, &jump, sizeof(int));
             return;
