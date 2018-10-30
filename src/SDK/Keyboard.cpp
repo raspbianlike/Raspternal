@@ -11,7 +11,7 @@ void Keyboard::Init() {
     Logger::Info("Found Keyboard, ID: %i\n", this->fd);
 }
 
-int *Keyboard::FindKeyboardDevice(int dev) {
+void Keyboard::FindKeyboardDevice(int dev) {
     char path[256];
     sprintf(path, "/dev/input/event%d", dev);
     int fd = open(path, O_RDONLY | O_NONBLOCK);

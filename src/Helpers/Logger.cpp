@@ -1,5 +1,5 @@
 #include "Logger.hpp"
-
+#include <cstdarg>
 const char *modules[] = {"bhop", "glow", "triggerbot", "noflash"};
 
 void Logger::Address(const char *str, uintptr_t address) {
@@ -19,9 +19,13 @@ void Logger::Modules() {
 
     printf(BOLD WHITE CYAN "?>" RESET" \n");
 }
-
-void Logger::Info(const char *str, ...) { // TODO: Make less gay
-    printf(BOLD WHITE CYAN "[" RESET "LOG" BOLD CYAN "] " RESET CYAN "%s" CYAN RESET "\n", str);
+void Logger::Info(const char* str, ...) {
+    char buffer[1024];
+    va_list vlist;
+    va_start(vlist, str);
+    vsnprintf(buffer, 1024, str, vlist);
+    va_end(vlist);
+    printf(BOLD WHITE CYAN "[" RESET "INFO" BOLD CYAN "] " RESET CYAN "%s" CYAN RESET "\n", buffer);
 }
 
 void Logger::Error(const char *str) {

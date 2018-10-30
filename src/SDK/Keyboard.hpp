@@ -20,7 +20,7 @@ public:
 
     int OpenKeyboardDevice();
 
-    int* FindKeyboardDevice(int dev);
+    void FindKeyboardDevice(int dev);
 
     void Run();
 

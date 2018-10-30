@@ -13,15 +13,13 @@ void Sigger::FindLocalPlayer() {
         mov     rax, cs:qword_1FD1610
         mov     rbp, rsp
         jz      short loc_7A2DCE
-        lea     rax, qword_1FD1610
+        lea     rax, qword_1FD1610 <<-
         movsxd  rdi, edi
         mov     rax, [rax+rdi*8]
      */
 
     uintptr_t getPlayerFunction = csgo.FindPattern("\x48\x89\xe5\x74\x0e\x48\x8d\x05", "xxxxxxxx", "client_panorama_client.so", "GetPlayerFunction");
     uintptr_t localPlayerMov = csgo.GetCallAddress(getPlayerFunction + 0x7);
-    printf("pl %p\n", getPlayerFunction);
-    printf("mov %p\n", localPlayerMov);
     csgo.ReadBuffer(localPlayerMov, &Offsets::LocalPlayer::instance, sizeof(uintptr_t));
 
     Logger::Address("Localplayer", Offsets::LocalPlayer::instance);
@@ -70,6 +68,5 @@ void Sigger::FindEntityList() {
     csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
     Offsets::EntityList::entityListPointer = entityList;
-    Logger::Address("entityList", Offsets::EntityList::entityListPointer);
-
+    Logger::Address("EntityList", Offsets::EntityList::entityListPointer);
 }
