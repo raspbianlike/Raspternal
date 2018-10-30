@@ -28,7 +28,7 @@ public:
 
 private:
     int fd = -1;
-    bool keystate[256];
+    bool keystate[257];
 };
 
 inline Keyboard keyboard;

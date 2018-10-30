@@ -9,12 +9,14 @@ int previousTickCount = 0;
 void Run::Run() {
     while (true) {
         int tick = 0;
+
         csgo.ReadBuffer(Offsets::GlobalVars::globalVars + 0x1C, &tick, sizeof(int));
-        if (tick == previousTickCount)
+        if (tick == previousTickCount && previousTickCount != 0) {
             continue;
+        }
 
         previousTickCount = tick;
-
+        //Logger::Info("Tick: %i", tick);
         std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 
         memset(&localPlayer, NULL, sizeof(localPlayer));
@@ -22,9 +24,8 @@ void Run::Run() {
         memset(&globalVars, NULL, sizeof(globalVars));
 
         csgo.ReadBuffer(Offsets::GlobalVars::globalVars, &globalVars, sizeof(CGlobalVars));
-        csgo.ReadBuffer(Offsets::GlobalVars::globalVars, &globalVars, sizeof(CGlobalVars));
         csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity));
-        for (int i = 0; i < globalVars.maxClients; i++) // TODO: read out maxClients using globalVars
+        for (int i = 0; i < globalVars.maxClients; i++)
             entities[i] = CBaseEntity::GetEntity(i);
 
         // run hacks
@@ -33,8 +34,8 @@ void Run::Run() {
         std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 
-        float ticks = duration / 100.0f / globalVars.interval_per_tick;
-        if (false) { // TODO: Make module for this
+        float ticks = duration / 100.0f / (1000.0f * globalVars.interval_per_tick);
+        if (Misc::BHop::enabled) { // TODO: Make module for this
             Logger::Info("Run CPU time: %i microseconds, %f ticks", duration, ticks);
         }
     }

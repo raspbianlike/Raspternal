@@ -7,7 +7,7 @@ void Keyboard::Init() {
     OpenKeyboardDevice();
     Logger::Info("Waiting for Keyboard...");
 
-    while(this->fd == -1);
+    while (this->fd == -1);
     Logger::Info("Found Keyboard, ID: %i\n", this->fd);
 }
 
@@ -15,13 +15,13 @@ void Keyboard::FindKeyboardDevice(int dev) {
     char path[256];
     sprintf(path, "/dev/input/event%d", dev);
     int fd = open(path, O_RDONLY | O_NONBLOCK);
-    while(this->fd == -1) {
+    while (this->fd == -1) {
         while (true) {
             struct input_event ev;
             ssize_t n = ::read(fd, &ev, sizeof(ev));
             if (n != sizeof(ev))
                 break;
-            if (ev.type == EV_KEY) // got keyboard event, assign fd
+            if (ev.type == EV_KEY && ev.value >= 0 && ev.value <= 2) // got keyboard event, assign fd
                 this->fd = fd;
         }
     }
