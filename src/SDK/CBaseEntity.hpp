@@ -5,7 +5,7 @@
 #include "SDK.hpp"
 
 extern Entity localPlayer;
-extern Entity entities[64];
+extern std::array<Entity, 64> entities;
 
 namespace CBaseEntity {
     extern Entity GetEntity(int index);

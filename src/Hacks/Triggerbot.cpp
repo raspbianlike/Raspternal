@@ -12,9 +12,9 @@ void Triggerbot::Run() {
     if (crosshairIndex == 0)
         return;
 
-    Entity ent = CBaseEntity::GetEntity(crosshairIndex);
+    Entity *ent = &entities[crosshairIndex];
 
-    if (ent.teamNum == localPlayer.teamNum)
+    if (ent->teamNum == localPlayer.teamNum)
         return;
 
     if (keyboard.IsButtonDown(KEY_LEFTALT))

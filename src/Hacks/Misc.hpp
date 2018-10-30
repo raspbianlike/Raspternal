@@ -1,7 +1,7 @@
 #ifndef RASPTERNAL_MISC_HPP
 #define RASPTERNAL_MISC_HPP
 
-#include "../Hooker.hpp"
+#include "../Sigger.hpp"
 #include "../SDK/Entity.hpp"
 #include "../SDK/Keyboard.hpp"
 #include "../SDK/Entity.hpp"

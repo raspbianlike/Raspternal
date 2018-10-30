@@ -2,7 +2,7 @@
 #define RASPTERNAL_SDK_HPP
 
 #include "../Zero.hpp"
-#include "../Hooker.hpp"
+#include "../Sigger.hpp"
 
 #include "../Helpers/Helpers.hpp"
 

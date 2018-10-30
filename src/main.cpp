@@ -123,11 +123,11 @@ void ProcessCommand(string message) {
 
 void Init() {
     keyboard.Init();
-    Hooker::Init();
-    Hooker::FindLocalPlayer();
-    Hooker::FindForceJumpAddress();
-    Hooker::FindGlowObjectManager();
-    Hooker::FindEntityList();
+    Sigger::Init();
+    Sigger::FindLocalPlayer();
+    Sigger::FindForceJumpAddress();
+    Sigger::FindGlowObjectManager();
+    Sigger::FindEntityList();
 
     Logger::Info("Init finished!");
     std::thread Run(Run::Run);

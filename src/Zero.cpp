@@ -104,7 +104,7 @@ uintptr_t Zero::FindPattern(const char *pattern, const char *mask, const char *m
         chunkCount++;
         totalSize -= readSize;
     }
-    printf("Unable to find pattern! %s\n", name);
+    printf("Unable to find pattern %s!\n", name);
     return NULL;
 }
 

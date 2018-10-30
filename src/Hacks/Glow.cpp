@@ -21,7 +21,7 @@ void Glow::Run() {
             continue;
 
         Entity ent;
-       csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity));
+        csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity));
 
         if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant) {
             continue;

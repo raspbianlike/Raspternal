@@ -30,7 +30,7 @@ namespace Offsets {
 }
 
 
-class Hooker {
+class Sigger {
 public:
     static void Init();
 
