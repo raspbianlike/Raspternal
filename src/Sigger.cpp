@@ -70,3 +70,27 @@ void Sigger::FindEntityList() {
     Offsets::EntityList::entityListPointer = entityList;
     Logger::Address("EntityList", Offsets::EntityList::entityListPointer);
 }
+
+void Sigger::FindGlobalVars() {
+    uintptr_t g_pGlobalVarsMov = csgo.FindPattern("\x48\x8B\x15\x00\x00\x00\x00\x48\x8B\x07\x48\x8B\x31",
+                                                   "xxx????xxxxxx", "engine_client.so", "GlobalVars");
+
+    /*
+        xor     eax, eax
+        call    sub_2C0360
+        cmp     cs:qword_DF4770, 0
+        jz      loc_2BAECE
+        lea     rdi, aG_clientdllIni ; "g_ClientDLL->Init"
+        xor     eax, eax
+        call    _COM_TimestampedLog
+        mov     rdi, cs:qword_DF4770
+        mov     rcx, cs:off_DD9E50
+        mov     rdx, cs:off_DD84F8 <<-
+        mov     rax, [rdi]
+        mov     rsi, [rcx]
+        call    qword ptr [rax+10h]test    eax, eax
+    */
+    uintptr_t g_pGlobalVars= csgo.GetCallAddress(g_pGlobalVarsMov + 0x2);
+    csgo.ReadBuffer(g_pGlobalVars, &Offsets::GlobalVars::globalVars, sizeof(uintptr_t));
+    Logger::Address("globalVars", Offsets::GlobalVars::globalVars);
+}

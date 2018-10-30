@@ -128,6 +128,7 @@ void Init() {
     Sigger::FindForceJumpAddress();
     Sigger::FindGlowObjectManager();
     Sigger::FindEntityList();
+    Sigger::FindGlobalVars();
 
     Logger::Info("Init finished!");
     std::thread Run(Run::Run);

@@ -25,7 +25,11 @@ namespace Offsets {
     }
 
     namespace EntityList {
-        inline uintptr_t entityListPointer = NULL;
+        inline uintptr_t entityListPointer;
+    }
+
+    namespace GlobalVars {
+        inline uintptr_t globalVars;
     }
 }
 
@@ -41,6 +45,8 @@ public:
     static void FindGlowObjectManager();
 
     static void FindEntityList();
+
+    static void FindGlobalVars();
 };
 
 
