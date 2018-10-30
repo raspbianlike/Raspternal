@@ -1,16 +1,35 @@
 #include "Keyboard.hpp"
+#include "../Helpers/Logger.hpp"
 
 // credits to ko1N
 
 void Keyboard::Init() {
-    this->fd = OpenKeyboardDevice(4); // HOMEWORK: Get this dynamically
+    OpenKeyboardDevice();
+    Logger::Info("Waiting for Keyboard...");
+
+    while(this->fd == -1);
+    Logger::Info("Found Keyboard, ID: %i\n", this->fd);
 }
 
-int Keyboard::OpenKeyboardDevice(int dev) {
+int *Keyboard::FindKeyboardDevice(int dev) {
     char path[256];
     sprintf(path, "/dev/input/event%d", dev);
+    int fd = open(path, O_RDONLY | O_NONBLOCK);
+    while(this->fd == -1) {
+        while (true) {
+            struct input_event ev;
+            ssize_t n = ::read(fd, &ev, sizeof(ev));
+            if (n != sizeof(ev))
+                break;
+            if (ev.type == EV_KEY) // got keyboard event, assign fd
+                this->fd = fd;
+        }
+    }
+}
 
-    return ::open(path, O_RDONLY | O_NONBLOCK);
+int Keyboard::OpenKeyboardDevice() {
+    for (int i = 0; i < 127; i++)
+        std::thread(&Keyboard::FindKeyboardDevice, this, i).detach();
 }
 
 void Keyboard::Run() {

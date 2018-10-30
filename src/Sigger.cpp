@@ -20,6 +20,8 @@ void Sigger::FindLocalPlayer() {
 
     uintptr_t getPlayerFunction = csgo.FindPattern("\x48\x89\xe5\x74\x0e\x48\x8d\x05", "xxxxxxxx", "client_panorama_client.so", "GetPlayerFunction");
     uintptr_t localPlayerMov = csgo.GetCallAddress(getPlayerFunction + 0x7);
+    printf("pl %p\n", getPlayerFunction);
+    printf("mov %p\n", localPlayerMov);
     csgo.ReadBuffer(localPlayerMov, &Offsets::LocalPlayer::instance, sizeof(uintptr_t));
 
     Logger::Address("Localplayer", Offsets::LocalPlayer::instance);
@@ -48,26 +50,26 @@ void Sigger::FindGlowObjectManager() {
 void Sigger::FindEntityList() {
     uintptr_t g_ppEntityListMov = csgo.FindPattern("\x48\x8B\x1D\x00\x00\x00\x00\x90\x48\x8B\x3B\x4C\x89\xF6\xE8\x00\x00\x00\x00\x48\x85\xC0\x49\x89\xC6",
                                                    "xxx????xxxxxxxx????xxxxxx", "client_panorama_client.so", "entitylist");
-    /*
-        push    r12
-        xor     r12d, r12d
-        push    rbx
-        sub     rsp, 18h
-        mov     r13, [rdi+410h]
-        lea     rdi, aSearchingForCl ; "Searching for client entities with clas"...
-        mov     rsi, r13
-        call    _Msg
-        mov     rbx, cs:off_18F79B0 <<-
-        nop
-    */
 
+    /*
+    push    r12
+    xor     r12d, r12d
+    push    rbx
+    sub     rsp, 18h
+    mov     r13, [rdi+410h]
+    lea     rdi, aSearchingForCl ; "Searching for client entities with clas"...
+    mov     rsi, r13
+    call    _Msg
+    mov     rbx, cs:off_18F79B0 <<-
+    nop
+    */
     uintptr_t g_ppEntityList = csgo.GetCallAddress(g_ppEntityListMov + 0x2);
     uintptr_t g_pEntityList;
     uintptr_t entityList;
-
     csgo.ReadBuffer(g_ppEntityList, &g_pEntityList, sizeof(uintptr_t));
     csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
     Offsets::EntityList::entityListPointer = entityList;
     Logger::Address("entityList", Offsets::EntityList::entityListPointer);
+
 }

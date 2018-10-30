@@ -18,13 +18,16 @@ class Keyboard {
 public:
     void Init();
 
-    int OpenKeyboardDevice(int dev);
+    int OpenKeyboardDevice();
+
+    int* FindKeyboardDevice(int dev);
 
     void Run();
 
     bool IsButtonDown(int key);
+
 private:
-    int fd;
+    int fd = -1;
     bool keystate[256];
 };
 
