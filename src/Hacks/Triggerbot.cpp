@@ -14,7 +14,7 @@ void Triggerbot::Run() {
 
     Entity *ent = &entities[crosshairIndex];
 
-    if (ent->teamNum == localPlayer.teamNum)
+    if (!ent || ent->health < 1 || ent->dormant || ent->teamNum <= 1 || ent->teamNum == localPlayer.teamNum)
         return;
 
     if (keyboard.IsButtonDown(KEY_LEFTALT))
