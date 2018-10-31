@@ -1,5 +1,5 @@
-#ifndef RASPTERNAL_ENTITY_HPP
-#define RASPTERNAL_ENTITY_HPP
+#ifndef RASPTERNAL_DEFINITIONS_HPP
+#define RASPTERNAL_DEFINITIONS_HPP
 
 struct Entity {
     char pad[0x94]; // 0x0
@@ -14,4 +14,13 @@ struct Entity {
     char pad3[0x30]; // 0x13C
 };
 
-#endif  // RASPTERNAL_ENTITY_HPP
+struct BoneMatrix {
+    char __buff_0x00[0xC];//0x00
+    float x;//0xC
+    char __buff_0x10[0xC];//0x10
+    float y;//0x1c
+    char __buff_0x20[0xC];//0x20
+    float z;//0x2c
+};
+
+#endif  // RASPTERNAL_DEFINITIONS_HPP

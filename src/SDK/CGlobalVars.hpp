@@ -1,7 +1,10 @@
 #ifndef RASPTERNAL_CGLOBALVARS_HPP
 #define RASPTERNAL_CGLOBALVARS_HPP
 
-struct CGlobalVars {
+#include "SDK.hpp"
+
+class CGlobalVars {
+public:
     float realtime; // 0x0
     int framecount; // 0x4
     float absoluteframetime; // 0x8
@@ -17,6 +20,16 @@ struct CGlobalVars {
     void *pSaveData;
     bool m_bClient;
     bool m_bRemoteClient;
+
+    CGlobalVars GetGlobalVars() {
+        CGlobalVars tmp{};
+        csgo.ReadBuffer(Offsets::GlobalVars::globalVars, &tmp, sizeof(CGlobalVars));
+        return tmp;
+    };
+
+    void UpdateGlobalVars() {
+        csgo.ReadBuffer(Offsets::GlobalVars::globalVars, this, sizeof(CGlobalVars));
+    };
 };
 
 extern CGlobalVars globalVars;

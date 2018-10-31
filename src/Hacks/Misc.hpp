@@ -2,9 +2,8 @@
 #define RASPTERNAL_MISC_HPP
 
 #include "../Sigger.hpp"
-#include "../SDK/Entity.hpp"
+#include "../SDK/definitions.hpp"
 #include "../SDK/Input.hpp"
-#include "../SDK/Entity.hpp"
 
 namespace Misc {
     namespace NoFlash {

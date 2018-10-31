@@ -1,7 +1,7 @@
 #ifndef RASPTERNAL_GLOW_HPP
 #define RASPTERNAL_GLOW_HPP
 
-#include "../SDK/Entity.hpp"
+#include "../SDK/definitions.hpp"
 #include "../SDK/SDK.hpp"
 #include "../SDK/CBaseEntity.hpp"
 #include "Triggerbot.hpp"

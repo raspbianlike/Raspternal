@@ -2,7 +2,7 @@
 #define RASPTERNAL_TRIGGERBOT_HPP
 
 #include "../SDK/SDK.hpp"
-#include "../SDK/Entity.hpp"
+#include "../SDK/definitions.hpp"
 #include "../SDK/CBaseEntity.hpp"
 #include "../SDK/Input.hpp"
 

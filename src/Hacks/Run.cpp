@@ -18,8 +18,7 @@ void Run::Run() {
             // Update entities and such every tick
             csgo.ReadBuffer(Offsets::GlobalVars::globalVars + 0x1C, &tick, sizeof(int));
             if (tick != previousTickCount || previousTickCount == 0) {
-
-                csgo.ReadBuffer(Offsets::GlobalVars::globalVars, &globalVars, sizeof(CGlobalVars));
+                globalVars.UpdateGlobalVars();
                 csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity));
                 for (int i = 0; i < globalVars.maxClients; i++)
                     entities[i] = CBaseEntity::GetEntity(i);

@@ -1,7 +1,7 @@
 #ifndef RASPTERNAL_CBASENTITY_HPP
 #define RASPTERNAL_CBASENTITY_HPP
 
-#include "Entity.hpp"
+#include "definitions.hpp"
 #include "SDK.hpp"
 
 extern Entity localPlayer;
