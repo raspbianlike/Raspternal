@@ -4,7 +4,7 @@
 #include "../SDK/SDK.hpp"
 #include "../SDK/Entity.hpp"
 #include "../SDK/CBaseEntity.hpp"
-#include "../SDK/Keyboard.hpp"
+#include "../SDK/Input.hpp"
 
 extern "C" {
 #include <xdo.h>
