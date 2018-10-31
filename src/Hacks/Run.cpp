@@ -1,8 +1,8 @@
 #include "Run.hpp"
 #include "../SDK/CGlobalVars.hpp"
 
-Entity localPlayer{};
-std::array<Entity, 64> entities{};
+EntityInfo localPlayer{};
+std::array<EntityInfo, 64> entities{};
 CGlobalVars globalVars{};
 int previousTickCount = 0;
 int previousFrameCount = 0;
@@ -19,9 +19,9 @@ void Run::Run() {
             csgo.ReadBuffer(Offsets::GlobalVars::globalVars + 0x1C, &tick, sizeof(int));
             if (tick != previousTickCount || previousTickCount == 0) {
                 globalVars.UpdateGlobalVars();
-                csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer, sizeof(Entity));
+                csgo.ReadBuffer(Offsets::LocalPlayer::instance, &localPlayer.entity, sizeof(Entity)); // TODO: Find out how to get static localplayer index
                 for (int i = 0; i < globalVars.maxClients; i++)
-                    entities[i] = CBaseEntity::GetEntity(i);
+                    entities[i] = entityList.GetEntityInfo(i);
 
                 previousTickCount = tick;
             }

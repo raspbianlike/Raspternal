@@ -3,7 +3,7 @@
 
 #include "../SDK/definitions.hpp"
 #include "../SDK/SDK.hpp"
-#include "../SDK/CBaseEntity.hpp"
+#include "../SDK/EntityList.hpp"
 #include "Triggerbot.hpp"
 #include "../settings.hpp"
 

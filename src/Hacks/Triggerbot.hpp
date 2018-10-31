@@ -3,7 +3,7 @@
 
 #include "../SDK/SDK.hpp"
 #include "../SDK/definitions.hpp"
-#include "../SDK/CBaseEntity.hpp"
+#include "../SDK/EntityList.hpp"
 #include "../SDK/Input.hpp"
 
 extern "C" {

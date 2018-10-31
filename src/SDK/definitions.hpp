@@ -1,6 +1,8 @@
 #ifndef RASPTERNAL_DEFINITIONS_HPP
 #define RASPTERNAL_DEFINITIONS_HPP
 
+#include <stdint-gcc.h>
+
 struct Entity {
     char pad[0x94]; // 0x0
     int index; // 0x94
@@ -12,6 +14,12 @@ struct Entity {
     int health; // 0x134
     int flags; // 0x138
     char pad3[0x30]; // 0x13C
+};
+
+class EntityInfo {
+public:
+    Entity entity;
+    uintptr_t entityPtr;
 };
 
 struct BoneMatrix {

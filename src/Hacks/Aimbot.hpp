@@ -2,7 +2,7 @@
 #define RASPTERNAL_AIMBOT_HPP
 
 
-class Aimbot {
+namespace Aimbot {
 
 };
 

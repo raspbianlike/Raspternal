@@ -5,7 +5,7 @@
 #include "Misc.hpp"
 #include "Triggerbot.hpp"
 
-#include "../SDK/CBaseEntity.hpp"
+#include "../SDK/EntityList.hpp"
 
 namespace Hacks {
     extern void Run();

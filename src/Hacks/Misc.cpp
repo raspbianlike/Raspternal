@@ -1,5 +1,5 @@
 #include "Misc.hpp"
-#include "../SDK/CBaseEntity.hpp"
+#include "../SDK/EntityList.hpp"
 
 void Misc::NoFlash::Run() {
     static float maxFlashAmount = 70.0f;
