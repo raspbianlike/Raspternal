@@ -28,6 +28,15 @@ void Logger::Info(const char* str, ...) {
     printf(BOLD WHITE CYAN "[" RESET "INFO" BOLD CYAN "] " RESET CYAN "%s" CYAN RESET "\n", buffer);
 }
 
+void Logger::Debug(const char* str, ...) {
+    char buffer[1024];
+    va_list vlist;
+    va_start(vlist, str);
+    vsnprintf(buffer, 1024, str, vlist);
+    va_end(vlist);
+    printf(BOLD WHITE RED "[" RESET RED "DEBUG" BOLD RED "] " RESET CYAN "%s" CYAN RESET "\n", buffer);
+}
+
 void Logger::Error(const char *str) {
     printf(BOLD RED "[ERROR] " BOLD RED "%s" RESET "\n", str);
 }

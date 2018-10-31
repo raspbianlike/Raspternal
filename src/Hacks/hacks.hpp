@@ -8,6 +8,6 @@
 #include "../SDK/CBaseEntity.hpp"
 
 namespace Hacks {
-    void Run();
+    extern void Run();
 }
 #endif  // RASPTERNAL_HACKS_HPP

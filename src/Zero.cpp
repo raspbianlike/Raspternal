@@ -82,7 +82,7 @@ uintptr_t Zero::FindPattern(const char *pattern, const char *mask, const char *m
     size_t readLength = strlen(mask);
 
     char buffer[0x500 + readLength];
-    size_t chunkSize = 0x500;
+    size_t chunkSize = sizeof(buffer) - readLength;
     size_t chunkCount = 0;
     size_t totalSize = current.size;
 
