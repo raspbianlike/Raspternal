@@ -73,7 +73,7 @@ void Sigger::FindEntityList() {
 
 void Sigger::FindGlobalVars() {
     uintptr_t g_pGlobalVarsMov = csgo.FindPattern("\x48\x8B\x15\x00\x00\x00\x00\x48\x8B\x07\x48\x8B\x31",
-                                                   "xxx????xxxxxx", "engine_client.so", "GlobalVars");
+                                                  "xxx????xxxxxx", "engine_client.so", "GlobalVars");
 
     /*
         xor     eax, eax
@@ -90,7 +90,19 @@ void Sigger::FindGlobalVars() {
         mov     rsi, [rcx]
         call    qword ptr [rax+10h]test    eax, eax
     */
-    uintptr_t g_pGlobalVars= csgo.GetCallAddress(g_pGlobalVarsMov + 0x2);
+    uintptr_t g_pGlobalVars = csgo.GetCyallAddress(g_pGlobalVarsMov + 0x2);
     csgo.ReadBuffer(g_pGlobalVars, &Offsets::GlobalVars::globalVars, sizeof(uintptr_t));
     Logger::Address("globalVars", Offsets::GlobalVars::globalVars);
+}
+
+void Sigger::FindInterfaceRegs() {
+
+    uintptr_t pInterfaceRegMov = csgo.FindPattern("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x18\x48\x85\xDB\x75\x0F\xEB\x3C", "xxx????xxxxxxxxxx", "engine_client.so", "interfaceReg");
+
+    uintptr_t pInterfaceReg = csgo.GetCallAddress(pInterfaceRegMov + 0x2);
+    Offsets::Interface::interfaceReg = pInterfaceReg;
+    Logger::Address("pInterfaceReg", pInterfaceReg);
+}
+
+void Sigger::FindViewAngle() { // Please make this better
 }

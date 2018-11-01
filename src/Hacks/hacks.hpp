@@ -4,6 +4,7 @@
 #include "Glow.hpp"
 #include "Misc.hpp"
 #include "Triggerbot.hpp"
+#include "Aimbot.hpp"
 
 #include "../SDK/EntityList.hpp"
 

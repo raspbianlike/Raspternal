@@ -31,6 +31,15 @@ namespace Offsets {
     namespace GlobalVars {
         inline uintptr_t globalVars;
     }
+
+    namespace Entity {
+        inline uintptr_t studioBones = 0x2C70;
+        inline uintptr_t viewMatrix = 0x2537374;
+    }
+
+    namespace Interface {
+        inline uintptr_t interfaceReg;
+    }
 }
 
 
@@ -47,6 +56,10 @@ public:
     static void FindEntityList();
 
     static void FindGlobalVars();
+
+    static void FindInterfaceRegs();
+
+    static void FindViewAngle();
 };
 
 

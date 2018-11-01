@@ -30,7 +30,7 @@ void Glow::Run() {
         if (!ent.health)
             col = {1.0f, 1.0f, 1.0f, 1.0f};
 
-        if (ent.teamNum == localPlayer.teamNum && ent.health)  // teammates blue
+        if (ent.teamNum == localPlayer.entity.teamNum && ent.health)  // teammates blue
             col = {0.0f, 0.0f, 1.0f, 1.0f};
         else if (ent.health) { // enemies red / reen
             if (Triggerbot::crosshairIndex == ent.index)

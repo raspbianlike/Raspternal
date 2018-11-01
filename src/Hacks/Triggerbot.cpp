@@ -5,16 +5,16 @@ void Triggerbot::Run() {
     if (!enabled)
         return;
 
-    if (localPlayer.health < 1)
+    if (localPlayer.entity.health < 1)
         return;
 
     csgo.ReadBuffer(Offsets::LocalPlayer::instance + Offsets::LocalPlayer::crosshairID, &crosshairIndex, sizeof(int));
     if (crosshairIndex == 0)
         return;
 
-    Entity ent = entities[crosshairIndex];
+    Entity ent = entities[crosshairIndex].entity;
 
-    if (ent.dormant || ent.teamNum == localPlayer.teamNum)
+    if (ent.dormant || ent.teamNum == localPlayer.entity.teamNum)
         return;
 
     if (keyboard.IsButtonDown(KEY_LEFTALT))
