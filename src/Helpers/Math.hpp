@@ -4,7 +4,7 @@
 #include "../SDK/Vector.hpp"
 
 namespace Math {
-    Vector CalcAngle(Vector *source, Vector *target);
+    Vector CalcAngle(Vector &source, Vector &target);
 
     void Clamp(Vector &vec);
 

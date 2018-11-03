@@ -1,0 +1,10 @@
+#ifndef RASPTERNAL_INTERFACES_HPP
+#define RASPTERNAL_INTERFACES_HPP
+
+
+class Interfaces {
+
+};
+
+
+#endif //RASPTERNAL_INTERFACES_HPP
