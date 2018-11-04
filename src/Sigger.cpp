@@ -90,7 +90,7 @@ void Sigger::FindGlobalVars() {
         mov     rsi, [rcx]
         call    qword ptr [rax+10h]test    eax, eax
     */
-    uintptr_t g_pGlobalVars = csgo.GetCyallAddress(g_pGlobalVarsMov + 0x2);
+    uintptr_t g_pGlobalVars = csgo.GetCallAddress(g_pGlobalVarsMov + 0x2);
     csgo.ReadBuffer(g_pGlobalVars, &Offsets::GlobalVars::globalVars, sizeof(uintptr_t));
     Logger::Address("globalVars", Offsets::GlobalVars::globalVars);
 }
@@ -105,4 +105,20 @@ void Sigger::FindInterfaceRegs() {
 }
 
 void Sigger::FindViewAngle() { // Please make this better
+
+    uintptr_t pPointerMov = csgo.FindPattern("\x48\x8B\x05\x00\x00\x00\x00\xBE\x01\x00\x00\x00\x48\x8B\xB8\x30\x01\x00\x00\x48\x8B\x07", "xxx????xxxxxxxxxxxxxxx", "engine_client.so", "pPointerMov");
+
+    uintptr_t call = csgo.GetCallAddress(pPointerMov + 0x2);
+    uintptr_t deref1;
+    uintptr_t deref2;
+    uintptr_t deref3;
+   csgo.ReadBuffer(call, &deref1, sizeof(uintptr_t));
+   /* csgo.ReadBuffer(deref1, &deref2, sizeof(uintptr_t));
+    csgo.ReadBuffer(deref2, &deref3, sizeof(uintptr_t));*/
+    Logger::Address("CALL", call);
+    Logger::Address("THE QWORD 1", deref1);
+
+    uintptr_t viewAngles = deref1 + 0x8E28; // HARDCODE BRO
+
+    Offsets::ClientState::viewAngles = viewAngles;
 }

@@ -40,6 +40,10 @@ namespace Offsets {
     namespace Interface {
         inline uintptr_t interfaceReg;
     }
+
+    namespace ClientState {
+        inline uintptr_t viewAngles;
+    }
 }
 
 
