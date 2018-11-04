@@ -14,6 +14,7 @@ namespace Offsets {
         inline uintptr_t flash = 0xAC10;
         inline uintptr_t shoot = 0xABB0;
         inline uintptr_t crosshairID = 0xBC08;
+        inline uintptr_t aimPunch = 0x3764;
     }
 
     namespace Jump {

@@ -34,7 +34,8 @@ enum modules {
     glow,
     bhop,
     triggerbot,
-    noflash
+    noflash,
+    aimbot
 };
 
 void ProcessCommand(string message) {
@@ -67,6 +68,8 @@ void ProcessCommand(string message) {
                 mod = list;
             else if (parts[1] == "glow")
                 mod = glow;
+            else if (parts[1] == "aimbot")
+                mod = aimbot;
             else if (parts[1] == "bhop")
                 mod = bhop;
             else if (parts[1] == "triggerbot")
@@ -77,16 +80,14 @@ void ProcessCommand(string message) {
                 mod = all;
 
             if (mod != list) {
-                if (parts[2] == "enable")
-                    operation = enable;
-                else if (parts[2] == "disable")
-                    operation = disable;
+                operation = enable;
             }
 
             switch (mod) {
                 case all:
                     if (operation == enable) {
                         Misc::BHop::Enable();
+                        Aimbot::Enable();
                         Glow::Enable();
                         Triggerbot::Enable();
                         Misc::NoFlash::Enable();
@@ -111,6 +112,9 @@ void ProcessCommand(string message) {
                     break;
                 case noflash:
                     Misc::NoFlash::Enable();
+                    break;
+                case aimbot:
+                    Aimbot::Enable();
                     break;
                 default:
                     Logger::Error("Unknown command!");

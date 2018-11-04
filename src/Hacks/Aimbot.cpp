@@ -19,9 +19,11 @@ void Aimbot::Run() {
     Vector pVecTarget = localPlayer.entity.origin + localPlayer.entity.viewOffset;
     Vector eVecTarget; // Enemy (bone) position
     Vector viewAngles;
+    Vector aimPunch ;
+    csgo.ReadBuffer(localPlayer.entityPtr + Offsets::LocalPlayer::aimPunch, &aimPunch, sizeof(Vector));
     csgo.ReadBuffer(Offsets::ClientState::viewAngles, &viewAngles, sizeof(Vector));
     Vector aim; // angle we will be aiming at
-    EntityInfo *target; // our target entity
+    EntityInfo *target = nullptr; // our target entity
     float bestFov = 180.0f;
     Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
@@ -52,7 +54,10 @@ void Aimbot::Run() {
     Logger::Debug("Enemy Bone pos: (%f, %f, %f)", eVecTarget.x, eVecTarget.y, eVecTarget.z);
     Logger::Debug("FOV: %f", bestFov);
     Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), index: %i", aim.x, aim.y, aim.z,target->entity.index);*/
-    csgo.WriteBuffer(Offsets::ClientState::viewAngles, &bestAim, sizeof(Vector));
+    if(target) {
+        bestAim -= aimPunch * 2.0f;
+        csgo.WriteBuffer(Offsets::ClientState::viewAngles, &bestAim, sizeof(Vector));
+    }
 }
 
 void Aimbot::Enable() {
