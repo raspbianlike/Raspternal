@@ -17,34 +17,27 @@ void BSPMap::unload() {
 bool BSPMap::IsNull() {
     if (buf.data() == NULL)
         return true;
-    printf("data not null\n");
+
     if (*m_path == NULL)
         return true;
-    printf("m_path not null\n");
 
     if (*m_mapName == NULL)
         return true;
-    printf("m_mapName not null\n");
 
     if (m_header == NULL)
         return true;
-    printf("m_header not null\n");
 
     if (m_plane == NULL)
         return true;
-    printf("m_plane not null\n");
 
     if (m_node == NULL)
         return true;
-    printf("m_node not null\n");
 
     if (m_leaf == NULL)
         return true;
-    printf("m_leaf not null\n");
 
     return false;
 }
-
 
 bool BSPMap::load(const char *path) {
     strcpy(m_path, path);
@@ -56,14 +49,13 @@ bool BSPMap::load(const char *path) {
     fPath += map;
     strcpy(m_mapName, map);
     // shit man you really want this shit?
-    printf("\nFile: %s\n", fPath.c_str());
     std::ifstream hFile(fPath.c_str(), std::ios::binary | std::ios::ate);
     std::streamsize size = hFile.tellg();
     hFile.seekg(0, std::ios::beg);
 
     if (hFile.bad())
         return false;
-    printf("Size: %lu\n", size);
+
     buf.resize(size);
     hFile.read(buf.data(), size);
 
