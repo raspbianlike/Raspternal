@@ -42,8 +42,11 @@ namespace Offsets {
         inline uintptr_t interfaceReg;
     }
 
-    namespace ClientState {
-        inline uintptr_t viewAngles;
+    namespace Engine {
+        inline uintptr_t base;
+        inline uintptr_t viewAngles = 0x8E28;
+        inline uintptr_t signOnState = 0x1A8;
+        inline uintptr_t mapName = 0x228;
     }
 }
 

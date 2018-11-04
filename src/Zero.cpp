@@ -1,4 +1,6 @@
 #include "Zero.hpp"
+#include <libgen.h>
+#include <zconf.h>
 
 Zero::Zero() {
 }
@@ -18,6 +20,13 @@ void Zero::Process(const char *processName) {
         if (comm == processName) {
             printf("Found target process! PID: %s\n", dir.path().filename().c_str());
             this->pid = atoi(dir.path().filename().c_str());
+
+
+            std::string path("/proc/" + std::to_string(pid) + "/exe");
+            ssize_t count = readlink(path.c_str(), processPath, PATH_MAX);
+
+            if (count != -1)
+                strcpy(processPath,  dirname(processPath));
             return;
         }
     }

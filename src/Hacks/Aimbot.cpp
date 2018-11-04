@@ -4,6 +4,8 @@
 #include "../SDK/EntityList.hpp"
 #include "../Helpers/Math.hpp"
 #include "../SDK/Input.hpp"
+#include "../SDK/Engine.hpp"
+#include "../SDK/BSPMap.hpp"
 
 Vector GetBone(uintptr_t studioBones, int bone) {
     BoneMatrix matrix;
@@ -21,7 +23,7 @@ void Aimbot::Run() {
     Vector viewAngles;
     Vector aimPunch ;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets::LocalPlayer::aimPunch, &aimPunch, sizeof(Vector));
-    csgo.ReadBuffer(Offsets::ClientState::viewAngles, &viewAngles, sizeof(Vector));
+    engine.GetViewAngles(viewAngles);
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
     float bestFov = 180.0f;
@@ -46,6 +48,8 @@ void Aimbot::Run() {
         if(fov > bestFov)
             continue;
 
+        if(!bspMap.Visible(pVecTarget, eVecTarget))
+            continue;
         bestAim = aim;
         target = &entities[i];
         bestFov = fov;
@@ -56,7 +60,7 @@ void Aimbot::Run() {
     Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), index: %i", aim.x, aim.y, aim.z,target->entity.index);*/
     if(target) {
         bestAim -= aimPunch * 2.0f;
-        csgo.WriteBuffer(Offsets::ClientState::viewAngles, &bestAim, sizeof(Vector));
+        engine.SetViewAngles(bestAim);
     }
 }
 

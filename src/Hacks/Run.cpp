@@ -1,5 +1,7 @@
 #include "Run.hpp"
 #include "../SDK/CGlobalVars.hpp"
+#include "../SDK/Engine.hpp"
+#include "../SDK/BSPMap.hpp"
 
 EntityInfo localPlayer{};
 std::array<EntityInfo, 64> entities{};
@@ -9,11 +11,22 @@ int previousFrameCount = 0;
 
 void Run::Run() {
     while (true) {
+
+        if(!engine.IsInGame()) {
+            bspMap.hasInit = false;
+            return;
+        }
+
+        if(!bspMap.hasInit) {
+            bspMap.hasInit = bspMap.load(csgo.processPath);
+            bspMap.DisplayInfo();
+        }
         int tick = 0;
         int frame = 0;
+        int clients = 0;
 
         // Run hacks every frame
-        csgo.ReadBuffer(Offsets::GlobalVars::globalVars + 0x4, &frame, sizeof(int));
+
         if (frame != previousFrameCount || previousFrameCount == 0) {
             // Update entities and such every tick
             csgo.ReadBuffer(Offsets::GlobalVars::globalVars + 0x1C, &tick, sizeof(int));

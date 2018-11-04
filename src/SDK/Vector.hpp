@@ -253,9 +253,9 @@ inline float Vector::Length(void) const {
 
     float root = 0.0f;
 
-    float sqsr = x * x + y * y + z * z;
+    //float sqsr = x * x + y * y + z * z;
 
-    root = sqrt(sqsr);
+    root = sqrtf(x * x + y * y + z * z);
 
     return root;
 }
