@@ -29,7 +29,7 @@ void Input::FindDevice(int dev) {
     }
 }
 
-int Input::OpenDevice() {
+void Input::OpenDevice() {
     if (type == ms) {
         char path[256];
         sprintf(path, "/dev/input/mouse0");

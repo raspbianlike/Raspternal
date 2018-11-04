@@ -22,7 +22,7 @@ class Input {
 public:
     void Init(DeviceTypes type);
 
-    int OpenDevice();
+    void OpenDevice();
 
     void FindDevice(int dev);
 
