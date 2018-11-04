@@ -126,7 +126,8 @@ void ProcessCommand(string message) {
 }
 
 void Init() {
-    keyboard.Init();
+    mouse.Init(ms);
+    keyboard.Init(kb);
     Sigger::Init();
     Sigger::FindLocalPlayer();
     Sigger::FindForceJumpAddress();

@@ -126,7 +126,7 @@ dleaf_t *BSPMap::GetLeafFromPoint(const Vector point) {
     return &m_leaf[-nodenum - 1];
 }
 
-bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd) // added in const so it won't try to refresh the same value
+bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd)
 {
     if (IsNull()) {
         return false;
@@ -136,8 +136,8 @@ bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd) // added in const
     Vector point = vStart;
 
     float steps = direction.Length();
-    if (steps > 4000.0f)    // performence issue when checking long distances, 2000 too short
-        return false;   // we'll assume we can't see someone at great lengths
+    if (steps > 4000.0f)
+        return false;
 
     direction /= steps;
 
@@ -146,8 +146,7 @@ bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd) // added in const
     while (steps > 0) {
         point += direction;
         leaf = GetLeafFromPoint(point);
-        // Tried differenent masks, none seem to work :/ becauce ur a bitch tbh tbf fam
-        if (leaf->contents & CONTENTS_SOLID) {
+        if (leaf->contents & CONTENTS_SOLID || leaf->contents & CONTENTS_HITBOX) {
             return false;
         }
         --steps;

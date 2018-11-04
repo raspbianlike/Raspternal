@@ -150,7 +150,6 @@ public:
 private:
     char m_path[255];
     char m_mapName[128];
-    //unsigned char *m_data;
     dheader_t *m_header;
     dnode_t *m_node;
     dplane_t *m_plane;

@@ -16,7 +16,7 @@ Vector GetBone(uintptr_t studioBones, int bone) {
 
 void Aimbot::Run() {
     // Update needed variables, maybe also make them global if needed in the future
-    if(!keyboard.IsButtonDown(KEY_V) || !enabled)
+    if(!mouse.IsButtonDown(0x1) || !enabled)
         return;
     Vector pVecTarget = localPlayer.entity.origin + localPlayer.entity.viewOffset;
     Vector eVecTarget; // Enemy (bone) position
@@ -26,7 +26,7 @@ void Aimbot::Run() {
     engine.GetViewAngles(viewAngles);
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
-    float bestFov = 180.0f;
+    float bestFov = 3.0f;
     Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
 

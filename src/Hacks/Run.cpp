@@ -14,12 +14,12 @@ void Run::Run() {
 
         if(!engine.IsInGame()) {
             bspMap.hasInit = false;
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             return;
         }
 
         if(!bspMap.hasInit) {
             bspMap.hasInit = bspMap.load(csgo.processPath);
-            bspMap.DisplayInfo();
         }
         int tick = 0;
         int frame = 0;
@@ -56,6 +56,6 @@ void Run::Run() {
             previousFrameCount = frame;
         }
         int frameMS = globalVars.frametime * 1000;
-        std::this_thread::sleep_for(std::chrono::milliseconds(frameMS - 1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(frameMS));
     }
 }

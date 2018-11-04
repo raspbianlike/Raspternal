@@ -14,13 +14,17 @@
 
 inline Display *disp = nullptr;
 
-class Keyboard {
+enum DeviceTypes {
+    ms,
+    kb
+};
+class Input {
 public:
-    void Init();
+    void Init(DeviceTypes type);
 
-    int OpenKeyboardDevice();
+    int OpenDevice();
 
-    void FindKeyboardDevice(int dev);
+    void FindDevice(int dev);
 
     void Run();
 
@@ -29,8 +33,11 @@ public:
 private:
     int fd = -1;
     bool keystate[257];
+    unsigned char buttonState[3];
+    DeviceTypes type;
 };
 
-inline Keyboard keyboard;
+inline Input keyboard;
+inline Input mouse;
 
 #endif //RASPTERNAL_KEYCHECK_HPP
