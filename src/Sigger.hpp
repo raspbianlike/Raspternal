@@ -6,49 +6,49 @@
 
 inline Zero csgo;
 
-namespace Offsets {
-    namespace LocalPlayer {
-        inline uintptr_t instance;
-        inline uintptr_t health = 0x134;
-        inline uintptr_t flags = 0x138;
-        inline uintptr_t flash = 0xAC10;
-        inline uintptr_t shoot = 0xABB0;
-        inline uintptr_t crosshairID = 0xBC08;
-        inline uintptr_t aimPunch = 0x3764;
-    }
+struct sOffsets {
+    struct sLocalPlayer {
+        uintptr_t instance;
+        uintptr_t health = 0x134;
+        uintptr_t flags = 0x138;
+        uintptr_t flash = 0xAC10;
+        uintptr_t shoot = 0xABB0;
+        uintptr_t crosshairID = 0xBC08;
+        uintptr_t aimPunch = 0x3764;
+    } localPlayer;
 
-    namespace Jump {
-        inline uintptr_t IN_JUMP;
-    }
+    struct sJump {
+        uintptr_t IN_JUMP;
+    } forceJump;
 
-    namespace GlowManager {
-        inline uintptr_t memoryAddress;
-    }
+    struct sGlowManager {
+        uintptr_t memoryAddress;
+    } glowManager;
 
-    namespace EntityList {
-        inline uintptr_t entityListPointer;
-    }
+    struct sEntityList {
+        uintptr_t entityListPointer;
+    } entityList;
 
-    namespace GlobalVars {
-        inline uintptr_t globalVars;
-    }
+    struct sGlobalVars {
+        uintptr_t globalVars;
+    } globalVars;
 
-    namespace Entity {
-        inline uintptr_t studioBones = 0x2C70;
-        inline uintptr_t viewMatrix = 0x2537374;
-    }
+    struct sEntity {
+        uintptr_t studioBones = 0x2C70;
+        uintptr_t viewMatrix = 0x2537374;
+    } entity;
 
-    namespace Interface {
-        inline uintptr_t interfaceReg;
-    }
+    struct sInterface {
+        uintptr_t interfaceReg;
+    } interface;
 
-    namespace Engine {
-        inline uintptr_t base;
-        inline uintptr_t viewAngles = 0x8E28;
-        inline uintptr_t signOnState = 0x1A8;
-        inline uintptr_t mapName = 0x228;
-    }
-}
+    struct sEngine {
+        uintptr_t base;
+        uintptr_t viewAngles = 0x8E28;
+        uintptr_t signOnState = 0x1A8;
+        uintptr_t mapName = 0x228;
+    } engine;
+} inline Offsets;
 
 
 class Sigger {
@@ -67,8 +67,9 @@ public:
 
     static void FindInterfaceRegs();
 
-    static void FindViewAngle();
+    static void FindEngineFunctions();
 };
 
+inline Sigger sigger;
 
 #endif //RASPTERNAL_HOOKER_HPP

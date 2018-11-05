@@ -134,7 +134,7 @@ void Init() {
     Sigger::FindGlowObjectManager();
     Sigger::FindEntityList();
     Sigger::FindGlobalVars();
-    Sigger::FindViewAngle();
+    Sigger::FindEngineFunctions();
 
     Logger::Info("Init finished!");
     std::thread Run(Run::Run);

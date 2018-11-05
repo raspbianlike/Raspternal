@@ -11,7 +11,7 @@ void Glow::Run() {
     memset(definitions, NULL, sizeof(definitions));
     memset(&manager, NULL, sizeof(manager));
 
-    csgo.ReadBuffer(Offsets::GlowManager::memoryAddress, &manager, sizeof(CGlowObjectManager));
+    csgo.ReadBuffer(Offsets.glowManager.memoryAddress, &manager, sizeof(CGlowObjectManager));
 
     size_t c = manager.m_GlowObjectDefinitions.Count;
     csgo.ReadBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr, definitions, sizeof(GlowObjectDefinition_t) * c);
@@ -23,7 +23,7 @@ void Glow::Run() {
         Entity ent;
         csgo.ReadBuffer((uintptr_t) definitions[i].m_pEntity, &ent, sizeof(Entity));
 
-        if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == Offsets::LocalPlayer::instance || ent.dormant) {
+        if ((ent.teamNum != 2 && ent.teamNum != 3) || (uintptr_t) definitions[i].m_pEntity == localPlayer.entityPtr || ent.dormant) {
             continue;
         }
         std::array<float, 4> col = {0.0f, 1.0f, 0.0f, 1.0f};
@@ -45,29 +45,6 @@ void Glow::Run() {
 
     }
 }
-
-/*
-void Glow::Start() {
-    if (!enabled)
-        pthread_create(&glow, nullptr, Run, nullptr); // maybe switch to std::thread?
-    else {
-        Logger::Error("Glow is already enabled!");
-        return;
-    }
-    Logger::Info("Glow has been enabled!");
-    enabled = true;
-}
-
-void Glow::Stop() {
-    if (enabled)
-        pthread_cancel(glow);
-    else {
-        Logger::Error("Glow is already disabled!");
-        return;
-    }
-    Logger::Info("Glow has been disabled!");
-    enabled = false;
-}*/
 
 void Glow::Enable() {
     enabled = !enabled;

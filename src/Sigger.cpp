@@ -20,17 +20,17 @@ void Sigger::FindLocalPlayer() {
 
     uintptr_t getPlayerFunction = csgo.FindPattern("\x48\x89\xe5\x74\x0e\x48\x8d\x05", "xxxxxxxx", "client_panorama_client.so", "GetPlayerFunction");
     uintptr_t localPlayerMov = csgo.GetCallAddress(getPlayerFunction + 0x7);
-    csgo.ReadBuffer(localPlayerMov, &Offsets::LocalPlayer::instance, sizeof(uintptr_t));
+    csgo.ReadBuffer(localPlayerMov, &Offsets.localPlayer.instance, sizeof(uintptr_t));
 
-    Logger::Address("Localplayer", Offsets::LocalPlayer::instance);
+    Logger::Address("Localplayer", Offsets.localPlayer.instance);
 }
 
 void Sigger::FindForceJumpAddress() {
     uintptr_t jumpMov = csgo.FindPattern("\x8B\x15\x00\x00\x00\x00\x89\xD8\x83\xC8\x02\xF6\xC2\x03\x0F\x45\xD8\x44\x89\xE0\xC1\xE0\x1E\xC1", "xx????xxxxxxxxxxxxxxxxxx",
                                          "client_panorama_client.so", "IN_JUMP Pointer");
-    Offsets::Jump::IN_JUMP = csgo.GetCallAddress(jumpMov + 0x1);
+    Offsets.forceJump.IN_JUMP = csgo.GetCallAddress(jumpMov + 0x1);
 
-    Logger::Address("IN_JUMP", Offsets::Jump::IN_JUMP);
+    Logger::Address("IN_JUMP", Offsets.forceJump.IN_JUMP);
 }
 
 void Sigger::FindGlowObjectManager() {
@@ -40,9 +40,9 @@ void Sigger::FindGlowObjectManager() {
     //Logger::Address("glowManagerStruct A", mov);
     //Logger::Address("glowManagerStruct -50", mov - 0x56);
 
-    Offsets::GlowManager::memoryAddress = csgo.GetCallAddress(glowManagerMov - 0x55);
+    Offsets.glowManager.memoryAddress = csgo.GetCallAddress(glowManagerMov - 0x55);
 
-    Logger::Address("glowManagerStructA", Offsets::GlowManager::memoryAddress);
+    Logger::Address("glowManagerStructA", Offsets.glowManager.memoryAddress);
 }
 
 void Sigger::FindEntityList() {
@@ -64,11 +64,12 @@ void Sigger::FindEntityList() {
     uintptr_t g_ppEntityList = csgo.GetCallAddress(g_ppEntityListMov + 0x2);
     uintptr_t g_pEntityList;
     uintptr_t entityList;
+
     csgo.ReadBuffer(g_ppEntityList, &g_pEntityList, sizeof(uintptr_t));
     csgo.ReadBuffer(g_pEntityList, &entityList, sizeof(uintptr_t));
 
-    Offsets::EntityList::entityListPointer = entityList;
-    Logger::Address("EntityList", Offsets::EntityList::entityListPointer);
+    Offsets.entityList.entityListPointer = entityList;
+    Logger::Address("EntityList", Offsets.entityList.entityListPointer);
 }
 
 void Sigger::FindGlobalVars() {
@@ -91,8 +92,8 @@ void Sigger::FindGlobalVars() {
         call    qword ptr [rax+10h]test    eax, eax
     */
     uintptr_t g_pGlobalVars = csgo.GetCallAddress(g_pGlobalVarsMov + 0x2);
-    csgo.ReadBuffer(g_pGlobalVars, &Offsets::GlobalVars::globalVars, sizeof(uintptr_t));
-    Logger::Address("globalVars", Offsets::GlobalVars::globalVars);
+    csgo.ReadBuffer(g_pGlobalVars, &Offsets.globalVars.globalVars, sizeof(uintptr_t));
+    Logger::Address("globalVars", Offsets.globalVars.globalVars);
 }
 
 void Sigger::FindInterfaceRegs() {
@@ -100,11 +101,12 @@ void Sigger::FindInterfaceRegs() {
     uintptr_t pInterfaceRegMov = csgo.FindPattern("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x18\x48\x85\xDB\x75\x0F\xEB\x3C", "xxx????xxxxxxxxxx", "engine_client.so", "interfaceReg");
 
     uintptr_t pInterfaceReg = csgo.GetCallAddress(pInterfaceRegMov + 0x2);
-    Offsets::Interface::interfaceReg = pInterfaceReg;
+    Offsets.interface.interfaceReg = pInterfaceReg;
     Logger::Address("pInterfaceReg", pInterfaceReg);
 }
 
-void Sigger::FindViewAngle() { // Please make this better
+
+void Sigger::FindEngineFunctions() {
 
     uintptr_t pPointerMov = csgo.FindPattern("\x48\x8B\x05\x00\x00\x00\x00\xBE\x01\x00\x00\x00\x48\x8B\xB8\x30\x01\x00\x00\x48\x8B\x07", "xxx????xxxxxxxxxxxxxxx",
                                              "engine_client.so", "pPointerMov");
@@ -114,5 +116,5 @@ void Sigger::FindViewAngle() { // Please make this better
     csgo.ReadBuffer(call, &deref1, sizeof(uintptr_t));
     Logger::Address("Engine base", deref1);
 
-    Offsets::Engine::base = deref1;
+    Offsets.engine.base = deref1;
 }

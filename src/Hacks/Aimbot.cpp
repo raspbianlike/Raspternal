@@ -34,7 +34,7 @@ void Aimbot::Run() {
     Vector eVecTarget; // Enemy (bone) position
     Vector viewAngles;
     Vector aimPunch;
-    csgo.ReadBuffer(localPlayer.entityPtr + Offsets::LocalPlayer::aimPunch, &aimPunch, sizeof(Vector));
+    csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
     engine.GetViewAngles(viewAngles);
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
@@ -48,7 +48,7 @@ void Aimbot::Run() {
             continue;
 
         uintptr_t studioBones;
-        csgo.ReadBuffer(ent->entityPtr + Offsets::Entity::studioBones, &studioBones, sizeof(uintptr_t));
+        csgo.ReadBuffer(ent->entityPtr + Offsets.entity.studioBones, &studioBones, sizeof(uintptr_t));
         eVecTarget = GetBone(studioBones, 8); // 8 = Head (probably)
         if (eVecTarget.x == 0 && eVecTarget.y == 0 && eVecTarget.z == 0) // check if we have invalid data
             continue;

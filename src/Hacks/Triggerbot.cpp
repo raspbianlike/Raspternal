@@ -10,7 +10,7 @@ void Triggerbot::Run() {
         return;
 
     crosshairIndex = 0;
-    csgo.ReadBuffer(Offsets::LocalPlayer::instance + Offsets::LocalPlayer::crosshairID, &crosshairIndex, sizeof(int));
+    csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.crosshairID, &crosshairIndex, sizeof(int));
 
     if (crosshairIndex == 0 || crosshairIndex > globalVars.maxClients)
         return;

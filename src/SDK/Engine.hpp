@@ -5,32 +5,31 @@
 #include "Vector.hpp"
 #include "SDK.hpp"
 
-using namespace Offsets::Engine;
 
 class Engine {
 public:
     void GetViewAngles(Vector &out) {
         if (!IsInGame())
             return;
-        csgo.ReadBuffer(viewAngles + base, &out, sizeof(Vector));
+        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &out, sizeof(Vector));
     }
 
     void SetViewAngles(Vector &in) {
         if (!IsInGame())
             return;
-        csgo.WriteBuffer(viewAngles + base, &in, sizeof(Vector));
+        csgo.WriteBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &in, sizeof(Vector));
     }
 
     bool IsInGame() {
         int sign;
-        csgo.ReadBuffer(base + signOnState, &sign, sizeof(int));
+        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.signOnState, &sign, sizeof(int));
         return sign == 6;
     }
 
     const char *GetMapName(char *buf) {
         if (!IsInGame())
             return nullptr;
-        csgo.ReadBuffer(mapName + base, buf, 40);
+        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.mapName, buf, 40);
     }
 };
 

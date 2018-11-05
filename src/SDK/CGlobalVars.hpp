@@ -23,12 +23,12 @@ public:
 
     CGlobalVars GetGlobalVars() {
         CGlobalVars tmp{};
-        csgo.ReadBuffer(Offsets::GlobalVars::globalVars, &tmp, sizeof(CGlobalVars));
+        csgo.ReadBuffer(Offsets.globalVars.globalVars, &tmp, sizeof(CGlobalVars));
         return tmp;
     };
 
     void UpdateGlobalVars() {
-        csgo.ReadBuffer(Offsets::GlobalVars::globalVars, this, sizeof(CGlobalVars));
+        csgo.ReadBuffer(Offsets.globalVars.globalVars, this, sizeof(CGlobalVars));
     };
 };
 
