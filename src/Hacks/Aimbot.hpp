@@ -2,10 +2,13 @@
 #define RASPTERNAL_AIMBOT_HPP
 
 #include "../Helpers/Logger.hpp"
+#include "../SDK/Vector.hpp"
 
 
 namespace Aimbot {
     void Run();
+
+    void Smooth(Vector& angle, Vector& viewAngle);
 
     void Enable();
 
