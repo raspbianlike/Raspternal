@@ -10,15 +10,15 @@
 Vector GetBone(uintptr_t studioBones, int bone) {
     BoneMatrix matrix;
     csgo.ReadBuffer(studioBones + bone * sizeof(BoneMatrix), &matrix, sizeof(BoneMatrix));
-    return Vector(matrix.x, matrix.y, matrix.z);
+    return Vector(matrix.x, matrix.y, matrix.z);;
 }
 
-void Aimbot::RCS(Vector& angle, Vector& viewAngle) {
+void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
     Vector aimPunch;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle -= aimPunch * 2.0f;
-    Aimbot::Smooth(angle, viewAngle, 1.3f);
+    Aimbot::Smooth(angle, viewAngle, 1.0f);
 }
 
 void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
@@ -34,8 +34,14 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
 
 void Aimbot::Run() {
     // Update needed variables, maybe also make them global if needed in the future
-    if ((!keyboard.IsButtonDown(KEY_V)) || !enabled)
+    static EntityInfo *locked;
+
+    if (!mouse.IsButtonDown(0x1) || !enabled) {
+        if (locked) {
+            locked = NULL;
+        }
         return;
+    }
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
     //Logger::Debug("Offset: (%f, %f, %f)", localPlayer.entity.viewOffset.x, localPlayer.entity.viewOffset.y, localPlayer.entity.viewOffset.z);
@@ -46,7 +52,7 @@ void Aimbot::Run() {
     engine.GetViewAngles(viewAngles);
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
-    float bestFov = 15.0f;
+    float bestFov = 180.0f;
     Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
 
@@ -74,6 +80,9 @@ void Aimbot::Run() {
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
+        if(locked && locked->entityPtr && ent->entityPtr != locked->entityPtr)
+            continue;
+
         bestAim = aim;
         target = &entities[i];
         bestFov = fov;
@@ -83,10 +92,11 @@ void Aimbot::Run() {
     //Logger::Debug("FOV: %f", bestFov);
     if (target) {
         //Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), team: %i, locteam", aim.x, aim.y, aim.z, target->entity.teamNum, localPlayer.entity.teamNum);
-        //RCS(bestAim, viewAngles);
+        RCS(bestAim, viewAngles);
         //Smooth(bestAim, viewAngles);
         Math::Clamp(bestAim);
         engine.SetViewAngles(bestAim);
+        locked = target;
     }
 }
 

@@ -14,8 +14,6 @@ void Run::Run() {
     int ct = 0;
     while (true) {
         if (!engine.IsInGame()) {
-            if (bspMap.hasInit)
-                bspMap.unload();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             continue;
         }
