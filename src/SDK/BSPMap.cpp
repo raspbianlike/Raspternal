@@ -5,7 +5,7 @@ BSPMap::~BSPMap() {}
 
 void BSPMap::unload() {
     delete[]   buf.data();
-
+    hasInit = false;
     *m_path = NULL;
     *m_mapName = NULL;
     m_header = NULL;

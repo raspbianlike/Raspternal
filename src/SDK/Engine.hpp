@@ -15,8 +15,6 @@ public:
     }
 
     void SetViewAngles(Vector &in) {
-        if (!IsInGame())
-            return;
         csgo.WriteBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &in, sizeof(Vector));
     }
 

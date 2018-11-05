@@ -8,7 +8,9 @@
 namespace Aimbot {
     void Run();
 
-    void Smooth(Vector& angle, Vector& viewAngle);
+    void Smooth(Vector& angle, Vector& viewAngle, float val);
+
+    void RCS(Vector& angle, Vector& viewAngle);
 
     void Enable();
 

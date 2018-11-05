@@ -10,12 +10,19 @@
 Vector GetBone(uintptr_t studioBones, int bone) {
     BoneMatrix matrix;
     csgo.ReadBuffer(studioBones + bone * sizeof(BoneMatrix), &matrix, sizeof(BoneMatrix));
-    Vector ret(matrix.x, matrix.y, matrix.z);
-    return ret;
+    return Vector(matrix.x, matrix.y, matrix.z);
 }
 
-void Aimbot::Smooth(Vector &angle, Vector &viewAngle) {
-    float factor = 6.0f;
+void Aimbot::RCS(Vector& angle, Vector& viewAngle) {
+    Vector aimPunch;
+    csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
+
+    angle -= aimPunch * 2.0f;
+    Aimbot::Smooth(angle, viewAngle, 1.3f);
+}
+
+void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
+    float factor = val;
     Vector delta = angle - viewAngle;
     delta.Normalize();
     Vector change;
@@ -27,18 +34,19 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle) {
 
 void Aimbot::Run() {
     // Update needed variables, maybe also make them global if needed in the future
-    if ((!mouse.IsButtonDown(0x1)) || !enabled)
+    if ((!keyboard.IsButtonDown(KEY_V)) || !enabled)
         return;
 
-    Vector pVecTarget = localPlayer.entity.origin + localPlayer.entity.viewOffset;
+    Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
+    //Logger::Debug("Offset: (%f, %f, %f)", localPlayer.entity.viewOffset.x, localPlayer.entity.viewOffset.y, localPlayer.entity.viewOffset.z);
+
+    //pVecTarget.z += localPlayer.entity.viewOffset.z;
     Vector eVecTarget; // Enemy (bone) position
     Vector viewAngles;
-    Vector aimPunch;
-    csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
     engine.GetViewAngles(viewAngles);
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
-    float bestFov = 180.0f;
+    float bestFov = 15.0f;
     Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
 
@@ -49,14 +57,17 @@ void Aimbot::Run() {
 
         uintptr_t studioBones;
         csgo.ReadBuffer(ent->entityPtr + Offsets.entity.studioBones, &studioBones, sizeof(uintptr_t));
+
         eVecTarget = GetBone(studioBones, 8); // 8 = Head (probably)
+
         if (eVecTarget.x == 0 && eVecTarget.y == 0 && eVecTarget.z == 0) // check if we have invalid data
             continue;
 
         aim = Math::CalcAngle(pVecTarget, eVecTarget); // successfully found viable target
         float fov = Math::AngleFOV(viewAngles, aim);
-        //aim.Normalize();
+
         Math::Clamp(aim);
+
         if (fov > bestFov)
             continue;
 
@@ -67,12 +78,12 @@ void Aimbot::Run() {
         target = &entities[i];
         bestFov = fov;
     }
-    /*Logger::Debug("Viewangles: (%f, %f, %f)", viewAngles.x, viewAngles.y, viewAngles.z);
-    Logger::Debug("Enemy Bone pos: (%f, %f, %f)", eVecTarget.x, eVecTarget.y, eVecTarget.z);
-    Logger::Debug("FOV: %f", bestFov);*/
+    //Logger::Debug("Viewangles: (%f, %f, %f)", viewAngles.x, viewAngles.y, viewAngles.z);
+    //Logger::Debug("Target Angle: (%f, %f, %f)", bestAim.x, bestAim.y, bestAim.z);
+    //Logger::Debug("FOV: %f", bestFov);
     if (target) {
         //Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), team: %i, locteam", aim.x, aim.y, aim.z, target->entity.teamNum, localPlayer.entity.teamNum);
-        bestAim -= aimPunch * 2.0f;
+        //RCS(bestAim, viewAngles);
         //Smooth(bestAim, viewAngles);
         Math::Clamp(bestAim);
         engine.SetViewAngles(bestAim);

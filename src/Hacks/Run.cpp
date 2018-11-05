@@ -10,46 +10,51 @@ int previousTickCount = 0;
 int previousFrameCount = 0;
 
 void Run::Run() {
+    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    int ct = 0;
     while (true) {
-
-        if(!engine.IsInGame()) {
-            bspMap.hasInit = false;
+        if (!engine.IsInGame()) {
+            if (bspMap.hasInit)
+                bspMap.unload();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-            return;
+            continue;
         }
 
-        if(!bspMap.hasInit) {
+        if (!bspMap.hasInit) {
             bspMap.hasInit = bspMap.load(csgo.processPath);
         }
 
-        int tick = 0;
-        int frame = 0;
+        globalVars.UpdateGlobalVars();
+        int tick = globalVars.tickcount;
+        int frame = globalVars.framecount;
 
-        // Run hacks every frame
-        csgo.ReadBuffer(Offsets.globalVars.globalVars + 0x4, &frame, sizeof(int));
-        if (frame != previousFrameCount || previousFrameCount == 0 ) {
-            // Update entities and such every tick
-            csgo.ReadBuffer(Offsets.globalVars.globalVars + 0x1C, &tick, sizeof(int));
-            if (tick != previousTickCount || previousTickCount == 0) {
-                globalVars.UpdateGlobalVars();
-                //localPlayer = entityList.GetEntityInfo(1); // TODO: Find out how to get static localplayer index (done already)
-                csgo.ReadBuffer(Offsets.localPlayer.instance, &localPlayer.entity, sizeof(Entity));
-                localPlayer.entityPtr = Offsets.localPlayer.instance;
-                for (int i = 0; i < globalVars.maxClients; i++)
-                    entities[i] = entityList.GetEntityInfo(i);
 
-                previousTickCount = tick;
-            }
-
-            // Run Hacks
-            Hacks::Run();
-
-            previousFrameCount = frame;
-
+        if(frame == previousFrameCount) {
+            float fframeTimeMs = globalVars.frametime * 1000.0f;
+            int frameTimeMs = (int)fframeTimeMs;
+            frameTimeMs /=2;
+            std::this_thread::sleep_for(std::chrono::microseconds(frameTimeMs));
+            continue;
         }
-        else {
-            int frameMS = (int)globalVars.frametime;
-            std::this_thread::sleep_for(std::chrono::milliseconds(frameMS));
+
+        if(tick != previousTickCount) {
+            localPlayer.entityPtr = Offsets.localPlayer.instance;
+            csgo.ReadBuffer(localPlayer.entityPtr , &localPlayer.entity, sizeof(Entity));
+
+            for(int i = 0; i < globalVars.maxClients; i++)
+                entities[i] = entityList.GetEntityInfo(i);
+            previousTickCount = tick;
+            ct++;
         }
+
+        std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( end - start ).count();
+        if(duration >= 1000) {
+            start = std::chrono::high_resolution_clock::now();
+            //Logger::Info("CT: %i", ct);
+            ct = 0;
+        }
+        Hacks::Run();
+        previousFrameCount = frame;
     }
 }
