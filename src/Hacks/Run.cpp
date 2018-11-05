@@ -29,27 +29,27 @@ void Run::Run() {
         int frame = globalVars.framecount;
 
 
-        if(frame == previousFrameCount) {
+        if (frame == previousFrameCount) {
             float fframeTimeMs = globalVars.frametime * 1000.0f;
-            int frameTimeMs = (int)fframeTimeMs;
-            frameTimeMs /=2;
+            int frameTimeMs = (int) fframeTimeMs;
+            frameTimeMs /= 2;
             std::this_thread::sleep_for(std::chrono::microseconds(frameTimeMs));
             continue;
         }
 
-        if(tick != previousTickCount) {
+        if (tick != previousTickCount) {
             localPlayer.entityPtr = Offsets.localPlayer.instance;
-            csgo.ReadBuffer(localPlayer.entityPtr , &localPlayer.entity, sizeof(Entity));
+            csgo.ReadBuffer(localPlayer.entityPtr, &localPlayer.entity, sizeof(Entity));
 
-            for(int i = 0; i < globalVars.maxClients; i++)
+            for (int i = 0; i < globalVars.maxClients; i++)
                 entities[i] = entityList.GetEntityInfo(i);
             previousTickCount = tick;
             ct++;
         }
 
         std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( end - start ).count();
-        if(duration >= 1000) {
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        if (duration >= 1000) {
             start = std::chrono::high_resolution_clock::now();
             //Logger::Info("CT: %i", ct);
             ct = 0;
