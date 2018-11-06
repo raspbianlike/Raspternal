@@ -48,6 +48,14 @@ struct sOffsets {
         uintptr_t signOnState = 0x1A8;
         uintptr_t mapName = 0x228;
     } engine;
+
+    struct sWeapon {
+        uintptr_t m_AttributeManager = 0x34c0;
+        uintptr_t m_hActiveWeapon = 0x3628;
+        uintptr_t m_iItemDefinitionIndex = 0x268;
+        //uintptr_t m_AttributeManager = 0x34c0;
+    }weapon;
+
 } inline Offsets;
 
 

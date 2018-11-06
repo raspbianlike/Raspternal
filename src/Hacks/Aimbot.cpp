@@ -6,6 +6,18 @@
 #include "../SDK/BSPMap.hpp"
 #include "../SDK/EntityList.hpp"
 #include "../Helpers/Math.hpp"
+#include "../Helpers/Utils.hpp"
+
+int getActiveWeaponEntityID(uintptr_t entityPtr)
+{
+    unsigned int m_hActiveWeapon = 0;
+    unsigned int ActiveWeapon = 0;
+    csgo.ReadBuffer(entityPtr + Offsets.weapon.m_hActiveWeapon, &m_hActiveWeapon, sizeof(int));
+    if (m_hActiveWeapon != 0) {
+        ActiveWeapon = m_hActiveWeapon & 0xFFF;
+    }
+    return ActiveWeapon;
+}
 
 Vector GetBone(uintptr_t studioBones, int bone) {
     BoneMatrix matrix;
@@ -18,7 +30,7 @@ void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle -= aimPunch * 2.0f;
-    Aimbot::Smooth(angle, viewAngle, 1.0f);
+    Aimbot::Smooth(angle, viewAngle, 1.3f);
 }
 
 void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
@@ -35,13 +47,26 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
 void Aimbot::Run() {
     // Update needed variables, maybe also make them global if needed in the future
     static EntityInfo *locked;
-
+    static long lockTime = Utils::GetEpochTime();
     if (!mouse.IsButtonDown(0x1) || !enabled) {
         if (locked) {
             locked = NULL;
+            lockTime = Utils::GetEpochTime();
         }
         return;
     }
+
+    int wepI = getActiveWeaponEntityID(localPlayer.entityPtr);
+    int iWeaponID = 0;
+    EntityInfo weapon = entityList.GetEntityInfo(wepI);
+
+    csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 +
+              Offsets.weapon.m_iItemDefinitionIndex + 0x1A,
+              &iWeaponID,
+              sizeof(int));
+
+    if(iWeaponID == WEAPON_KNIFE || iWeaponID == WEAPON_TASER || iWeaponID == WEAPON_C4)
+        return;
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
     //Logger::Debug("Offset: (%f, %f, %f)", localPlayer.entity.viewOffset.x, localPlayer.entity.viewOffset.y, localPlayer.entity.viewOffset.z);
@@ -50,9 +75,11 @@ void Aimbot::Run() {
     Vector eVecTarget; // Enemy (bone) position
     Vector viewAngles;
     engine.GetViewAngles(viewAngles);
+
     Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
-    float bestFov = 180.0f;
+
+    float bestFov = 5.0f;
     Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
 
@@ -80,7 +107,7 @@ void Aimbot::Run() {
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if(locked && locked->entityPtr && ent->entityPtr != locked->entityPtr)
+        if(locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 300)
             continue;
 
         bestAim = aim;
@@ -92,11 +119,13 @@ void Aimbot::Run() {
     //Logger::Debug("FOV: %f", bestFov);
     if (target) {
         //Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), team: %i, locteam", aim.x, aim.y, aim.z, target->entity.teamNum, localPlayer.entity.teamNum);
-        RCS(bestAim, viewAngles);
-        //Smooth(bestAim, viewAngles);
+        if(iWeaponID != WEAPON_USP_SILENCER && iWeaponID != WEAPON_GLOCK && iWeaponID != WEAPON_DEAGLE)
+            RCS(bestAim, viewAngles);
+        Smooth(bestAim, viewAngles);
         Math::Clamp(bestAim);
         engine.SetViewAngles(bestAim);
         locked = target;
+        lockTime = Utils::GetEpochTime();
     }
 }
 
