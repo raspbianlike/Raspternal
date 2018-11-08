@@ -56,16 +56,23 @@ void Aimbot::Run() {
         return;
     }
 
+    if(localPlayer.entity.health < 1)
+        return;
+
     int wepI = getActiveWeaponEntityID(localPlayer.entityPtr);
-    int iWeaponID = 0;
+    if(!wepI)
+        return;
+
+    int currentWeaponId = 0;
+
     EntityInfo weapon = entityList.GetEntityInfo(wepI);
 
-    csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 +
-              Offsets.weapon.m_iItemDefinitionIndex + 0x1A,
-              &iWeaponID,
-              sizeof(int));
+    if(!weapon.entityPtr)
+        return;
 
-    if(iWeaponID == WEAPON_KNIFE || iWeaponID == WEAPON_TASER || iWeaponID == WEAPON_C4)
+    csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
+
+    if(currentWeaponId == WEAPON_KNIFE || currentWeaponId == WEAPON_TASER || currentWeaponId == WEAPON_C4)
         return;
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
@@ -119,8 +126,10 @@ void Aimbot::Run() {
     //Logger::Debug("FOV: %f", bestFov);
     if (target) {
         //Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), team: %i, locteam", aim.x, aim.y, aim.z, target->entity.teamNum, localPlayer.entity.teamNum);
-        if(iWeaponID != WEAPON_USP_SILENCER && iWeaponID != WEAPON_GLOCK && iWeaponID != WEAPON_DEAGLE)
+
+        if(currentWeaponId != WEAPON_USP_SILENCER && currentWeaponId != WEAPON_GLOCK && currentWeaponId != WEAPON_DEAGLE && currentWeaponId != WEAPON_SSG08 && currentWeaponId != WEAPON_AWP)
             RCS(bestAim, viewAngles);
+
         Smooth(bestAim, viewAngles);
         Math::Clamp(bestAim);
         engine.SetViewAngles(bestAim);

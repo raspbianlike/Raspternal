@@ -20,7 +20,7 @@ void Triggerbot::Run() {
     if (!ent->entityPtr || ent->entityPtr == localPlayer.entityPtr || ent->entity.dormant || ent->entity.teamNum == localPlayer.entity.teamNum || ent->entity.health < 1)
         return;
 
-    if (keyboard.IsButtonDown(KEY_LEFTALT))
+    if (mouse.IsButtonDown(0x4))
         xdo_click_window(xdo, CURRENTWINDOW, 1);
 }
 
