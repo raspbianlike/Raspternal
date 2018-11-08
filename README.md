@@ -2,8 +2,7 @@ Raspternal - Small external cheat
 
 ### Installation
 
-* **Arch**: `base-devel cmake clang git xdotool` 
-not sure if all of them are needed i pasted this readme
+* **Arch**: `base-devel cmake clang git xdotool`
 
 ### Compiling
 
