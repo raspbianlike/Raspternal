@@ -1,22 +1,32 @@
 #include "Aimbot.hpp"
-#include "../SDK/CGlobalVars.hpp"
-#include "../SDK/definitions.hpp"
-#include "../SDK/Input.hpp"
-#include "../SDK/Engine.hpp"
-#include "../SDK/BSPMap.hpp"
-#include "../SDK/EntityList.hpp"
-#include "../Helpers/Math.hpp"
-#include "../Helpers/Utils.hpp"
 
-int getActiveWeaponEntityID(uintptr_t entityPtr)
-{
-    unsigned int m_hActiveWeapon = 0;
-    unsigned int ActiveWeapon = 0;
+EntityInfo locked;
+long lockTime = Utils::GetEpochTime();
+
+
+int GetActiveWeaponEntityID(uintptr_t entityPtr) {
+    int m_hActiveWeapon = 0;
+    int activeWeapon = 0;
+
     csgo.ReadBuffer(entityPtr + Offsets.weapon.m_hActiveWeapon, &m_hActiveWeapon, sizeof(int));
-    if (m_hActiveWeapon != 0) {
-        ActiveWeapon = m_hActiveWeapon & 0xFFF;
-    }
-    return ActiveWeapon;
+
+    if (!m_hActiveWeapon)
+        return 0;
+
+    activeWeapon = m_hActiveWeapon & 0xFFF;
+
+
+    int currentWeaponId = 0;
+
+    EntityInfo weapon = entityList.GetEntityInfo(activeWeapon);
+
+    if (!weapon.entityPtr)
+        return 0;
+
+    csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
+
+    return currentWeaponId;
+
 }
 
 Vector GetBone(uintptr_t studioBones, int bone) {
@@ -33,7 +43,14 @@ void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
     Aimbot::Smooth(angle, viewAngle, 1.3f);
 }
 
-void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
+void Aimbot::AddRC(Vector &angle) {
+    Vector aimPunch;
+    csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
+
+    angle += aimPunch * 2.0f;
+}
+
+void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 10.0f) {
     float factor = val;
     Vector delta = angle - viewAngle;
     delta.Normalize();
@@ -44,50 +61,19 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 5.0f) {
     angle = viewAngle + change;
 }
 
-void Aimbot::Run() {
-    // Update needed variables, maybe also make them global if needed in the future
-    static EntityInfo *locked;
-    static long lockTime = Utils::GetEpochTime();
-    if (!mouse.IsButtonDown(0x1) || !enabled) {
-        if (locked) {
-            locked = NULL;
-            lockTime = Utils::GetEpochTime();
-        }
-        return;
-    }
+EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
 
-    if(localPlayer.entity.health < 1)
-        return;
-
-    int wepI = getActiveWeaponEntityID(localPlayer.entityPtr);
-    if(!wepI)
-        return;
-
-    int currentWeaponId = 0;
-
-    EntityInfo weapon = entityList.GetEntityInfo(wepI);
-
-    if(!weapon.entityPtr)
-        return;
-
-    csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
-
-    if(currentWeaponId == WEAPON_KNIFE || currentWeaponId == WEAPON_TASER || currentWeaponId == WEAPON_C4)
-        return;
+    int weaponID = GetActiveWeaponEntityID(localPlayer.entityPtr);
+    if (!weaponID)
+        return EntityInfo{};
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
-    //Logger::Debug("Offset: (%f, %f, %f)", localPlayer.entity.viewOffset.x, localPlayer.entity.viewOffset.y, localPlayer.entity.viewOffset.z);
 
-    //pVecTarget.z += localPlayer.entity.viewOffset.z;
-    Vector eVecTarget; // Enemy (bone) position
-    Vector viewAngles;
-    engine.GetViewAngles(viewAngles);
+    Vector eVecTarget; // Enemy position
 
-    Vector aim; // angle we will be aiming at
     EntityInfo *target = nullptr; // our target entity
+    float workingFOV = bestFov;
 
-    float bestFov = 5.0f;
-    Vector bestAim;
     // Iterate over all Entities until we find one that we can shoot
 
     for (int i = 1; i < globalVars.maxClients; i++) {
@@ -103,39 +89,67 @@ void Aimbot::Run() {
         if (eVecTarget.x == 0 && eVecTarget.y == 0 && eVecTarget.z == 0) // check if we have invalid data
             continue;
 
-        aim = Math::CalcAngle(pVecTarget, eVecTarget); // successfully found viable target
-        float fov = Math::AngleFOV(viewAngles, aim);
+        Vector workingAngle = angle;
+        Vector workingView = viewAngle;
 
-        Math::Clamp(aim);
 
-        if (fov > bestFov)
+        workingAngle = Math::CalcAngle(pVecTarget, eVecTarget); // found viable target
+
+        AddRC(workingView);
+
+        float fov = Math::AngleFOV(workingView, workingAngle);
+
+        Math::Clamp(workingAngle);
+
+        if (fov > workingFOV)
             continue;
 
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if(locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 300)
+        if(ent->entityPtr != locked.entityPtr && Utils::GetEpochTime() - lockTime < 350)
             continue;
 
-        bestAim = aim;
         target = &entities[i];
-        bestFov = fov;
+        angle = workingAngle;
+        workingFOV = fov;
     }
-    //Logger::Debug("Viewangles: (%f, %f, %f)", viewAngles.x, viewAngles.y, viewAngles.z);
-    //Logger::Debug("Target Angle: (%f, %f, %f)", bestAim.x, bestAim.y, bestAim.z);
-    //Logger::Debug("FOV: %f", bestFov);
-    if (target) {
-        //Logger::Debug("Found viable target! Viewangle: (%f, %f, %f), team: %i, locteam", aim.x, aim.y, aim.z, target->entity.teamNum, localPlayer.entity.teamNum);
 
-        if(currentWeaponId != WEAPON_USP_SILENCER && currentWeaponId != WEAPON_GLOCK && currentWeaponId != WEAPON_DEAGLE && currentWeaponId != WEAPON_SSG08 && currentWeaponId != WEAPON_AWP)
-            RCS(bestAim, viewAngles);
+    if (target)
+        return entities[target->entity.index];
 
-        Smooth(bestAim, viewAngles);
-        Math::Clamp(bestAim);
-        engine.SetViewAngles(bestAim);
-        locked = target;
-        lockTime = Utils::GetEpochTime();
+    return EntityInfo{};
+
+}
+
+void Aimbot::Run() {
+    // Update needed variables, maybe also make them global if needed in the future
+
+    if (!mouse.IsButtonDown(0x1) || !enabled) {
+        if (locked.entityPtr && locked.entity.health < 1) {
+            locked = EntityInfo{};
+            lockTime = Utils::GetEpochTime();
+        }
+        return;
     }
+
+    if (localPlayer.entity.health < 1)
+        return;
+
+    Vector bestAim, viewAngles;
+    engine.GetViewAngles(viewAngles);
+
+    EntityInfo target = GetClosestPlayer(bestAim, viewAngles);
+
+    if (!target.entityPtr || (bestAim.x == 0 && bestAim.y == 0 && bestAim.z == 0))
+        return;
+
+    RCS(bestAim, viewAngles);
+    Smooth(bestAim, viewAngles);
+    Math::Clamp(bestAim);
+    engine.SetViewAngles(bestAim);
+    locked = target;
+    lockTime = Utils::GetEpochTime();
 }
 
 void Aimbot::Enable() {

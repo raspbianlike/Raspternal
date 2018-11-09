@@ -34,7 +34,7 @@ void Misc::BHop::Run() {
         return;
 
     if (keyboard.IsButtonDown(KEY_SPACE)) { // might want to add a check if the cursor is enabled, but were fine for now
-        if (localPlayer.entity.flags == 257) {
+        if (localPlayer.entity.flags & 1 << 0) {
             csgo.WriteBuffer(Offsets.forceJump.IN_JUMP, &jump, sizeof(int));
             return;
         }

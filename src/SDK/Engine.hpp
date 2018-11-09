@@ -24,9 +24,10 @@ public:
         return sign == 6;
     }
 
-    const char *GetMapName(char *buf) {
+    void GetMapName(char *buf) {
         if (!IsInGame())
-            return nullptr;
+            buf = nullptr;
+
         csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.mapName, buf, 40);
     }
 };

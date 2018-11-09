@@ -30,8 +30,10 @@ void Run::Run() {
         if (frame == previousFrameCount) {
             float fframeTimeMs = globalVars.frametime * 1000.0f;
             int frameTimeMs = (int) fframeTimeMs;
-            frameTimeMs /= 4;
-            std::this_thread::sleep_for(std::chrono::microseconds(frameTimeMs));
+            //printf("pre %i\n",frameTimeMs);
+            frameTimeMs /= 3;
+            //printf("af %i\n",frameTimeMs);
+            std::this_thread::sleep_for(std::chrono::microseconds(1000));
             continue;
         }
 

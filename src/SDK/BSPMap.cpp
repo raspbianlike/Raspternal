@@ -48,7 +48,7 @@ bool BSPMap::load(const char *path) {
     engine.GetMapName(map);
     fPath += map;
     strcpy(m_mapName, map);
-    // shit man you really want this shit?
+
     std::ifstream hFile(fPath.c_str(), std::ios::binary | std::ios::ate);
     std::streamsize size = hFile.tellg();
     hFile.seekg(0, std::ios::beg);
