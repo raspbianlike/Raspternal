@@ -1,6 +1,6 @@
 #include "Aimbot.hpp"
 
-EntityInfo locked;
+EntityInfo* locked;
 long lockTime = Utils::GetEpochTime();
 
 
@@ -61,11 +61,11 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 10.0f) {
     angle = viewAngle + change;
 }
 
-EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
+EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
 
     int weaponID = GetWeaponID(localPlayer.entityPtr);
     if (!weaponID)
-        return EntityInfo{};
+        return nullptr;
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
 
@@ -107,7 +107,7 @@ EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if(ent->entityPtr != locked.entityPtr && Utils::GetEpochTime() - lockTime < 350)
+        if(locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 350)
             continue;
 
         target = &entities[i];
@@ -116,9 +116,9 @@ EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
     }
 
     if (target)
-        return entities[target->entity.index];
+        return &entities[target->entity.index];
 
-    return EntityInfo{};
+    return nullptr;
 
 }
 
@@ -126,8 +126,8 @@ void Aimbot::Run() {
     // Update needed variables, maybe also make them global if needed in the future
 
     if (!mouse.IsButtonDown(0x1) || !enabled) {
-        if (locked.entityPtr && locked.entity.health < 1) {
-            locked = EntityInfo{};
+        if (locked && locked->entity.health < 1) {
+            locked = nullptr;
             lockTime = Utils::GetEpochTime();
         }
         return;
@@ -139,9 +139,9 @@ void Aimbot::Run() {
     Vector bestAim, viewAngles;
     engine.GetViewAngles(viewAngles);
 
-    EntityInfo target = GetClosestPlayer(bestAim, viewAngles);
+    EntityInfo* target = GetClosestPlayer(bestAim, viewAngles);
 
-    if (!target.entityPtr || (bestAim.x == 0 && bestAim.y == 0 && bestAim.z == 0))
+    if (!target || (bestAim.x == 0 && bestAim.y == 0 && bestAim.z == 0))
         return;
 
     RCS(bestAim, viewAngles);

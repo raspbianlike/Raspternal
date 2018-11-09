@@ -18,7 +18,7 @@ namespace Aimbot {
 
     void Smooth(Vector &angle, Vector &viewAngle, float val);
 
-    EntityInfo GetClosestPlayer(Vector &angle, Vector &viewAngle);
+    EntityInfo *GetClosestPlayer(Vector &angle, Vector &viewAngle);
 
     void RCS(Vector &angle, Vector &viewAngle);
 
