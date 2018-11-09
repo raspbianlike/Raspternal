@@ -1,0 +1,9 @@
+#ifndef RASPTERNAL_CBASECOMBATWEAPON_HPP
+#define RASPTERNAL_CBASECOMBATWEAPON_HPP
+
+class CBaseCombatWeapon {
+public:
+
+}; // To be continued
+
+#endif  // RASPTERNAL_CBASECOMBATWEAPON_HPP
