@@ -8,6 +8,6 @@
 
 #include "thread"
 #include <pthread.h>
-#include "keysymdef.hpp"
+#include "X11/keysymdef.h"
 
 #endif  // RASPTERNAL_SDK_HPP

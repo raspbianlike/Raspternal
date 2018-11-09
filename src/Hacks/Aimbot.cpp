@@ -4,7 +4,7 @@ EntityInfo locked;
 long lockTime = Utils::GetEpochTime();
 
 
-int GetActiveWeaponEntityID(uintptr_t entityPtr) {
+int Aimbot::GetWeaponID(uintptr_t entityPtr) {
     int m_hActiveWeapon = 0;
     int activeWeapon = 0;
 
@@ -63,7 +63,7 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 10.0f) {
 
 EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
 
-    int weaponID = GetActiveWeaponEntityID(localPlayer.entityPtr);
+    int weaponID = GetWeaponID(localPlayer.entityPtr);
     if (!weaponID)
         return EntityInfo{};
 
@@ -93,11 +93,11 @@ EntityInfo Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
         Vector workingView = viewAngle;
 
 
+        AddRC(workingView); // add aim punch back before calculating fov
+
         workingAngle = Math::CalcAngle(pVecTarget, eVecTarget); // found viable target
 
-        AddRC(workingView);
-
-        float fov = Math::AngleFOV(workingView, workingAngle);
+        float fov = Math::AngleFOV(workingView, workingAngle); // calculate absolute fov
 
         Math::Clamp(workingAngle);
 
@@ -148,6 +148,7 @@ void Aimbot::Run() {
     Smooth(bestAim, viewAngles);
     Math::Clamp(bestAim);
     engine.SetViewAngles(bestAim);
+
     locked = target;
     lockTime = Utils::GetEpochTime();
 }

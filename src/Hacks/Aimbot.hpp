@@ -26,6 +26,8 @@ namespace Aimbot {
 
     void Enable();
 
+    int GetWeaponID(uintptr_t entityPtr);
+
     inline bool enabled = false;
 
     inline float bestFov = 6.0f;

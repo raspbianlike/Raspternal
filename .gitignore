@@ -9,6 +9,8 @@ compile_commands.json
 CTestTestfile.cmake
 Raspternal
 
+cmake-build-debug
+
 # Prerequisites
 *.d
 
@@ -43,3 +45,5 @@ Raspternal
 *.app
 
 *.cbp
+
+.idea/
