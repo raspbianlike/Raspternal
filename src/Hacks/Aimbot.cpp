@@ -3,6 +3,7 @@
 EntityInfo* locked;
 long lockTime = Utils::GetEpochTime();
 
+CSWeaponType activeWeapon;
 
 int Aimbot::GetWeaponID(uintptr_t entityPtr) {
     int m_hActiveWeapon = 0;
@@ -26,7 +27,6 @@ int Aimbot::GetWeaponID(uintptr_t entityPtr) {
     csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
 
     return currentWeaponId;
-
 }
 
 Vector GetBone(uintptr_t studioBones, int bone) {
@@ -36,6 +36,9 @@ Vector GetBone(uintptr_t studioBones, int bone) {
 }
 
 void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
+    if(!shouldRCS)
+        return;
+
     Vector aimPunch;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
@@ -44,6 +47,9 @@ void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
 }
 
 void Aimbot::AddRC(Vector &angle) {
+    if(!shouldRCS)
+        return;
+
     Vector aimPunch;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
@@ -62,10 +68,6 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 10.0f) {
 }
 
 EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
-
-    int weaponID = GetWeaponID(localPlayer.entityPtr);
-    if (!weaponID)
-        return nullptr;
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
 
@@ -91,7 +93,6 @@ EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
 
         Vector workingAngle = angle;
         Vector workingView = viewAngle;
-
 
         AddRC(workingView); // add aim punch back before calculating fov
 
@@ -119,7 +120,6 @@ EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
         return &entities[target->entity.index];
 
     return nullptr;
-
 }
 
 void Aimbot::Run() {
@@ -135,6 +135,21 @@ void Aimbot::Run() {
 
     if (localPlayer.entity.health < 1)
         return;
+
+
+    int weaponID = GetWeaponID(localPlayer.entityPtr);
+    if (!weaponID)
+        return;
+
+    activeWeapon = Utils::GetWeaponType(weaponID);
+
+    if(activeWeapon == CSWeaponType::WEAPONTYPE_C4
+        || activeWeapon == CSWeaponType::WEAPONTYPE_KNIFE
+        || activeWeapon == CSWeaponType::WEAPONTYPE_GRENADE
+        || activeWeapon == CSWeaponType::WEAPONTYPE_UNKNOWN)
+        return;
+
+    shouldRCS = (activeWeapon != CSWeaponType::WEAPONTYPE_SNIPER_RIFLE && activeWeapon != CSWeaponType::WEAPONTYPE_PISTOL);
 
     Vector bestAim, viewAngles;
     engine.GetViewAngles(viewAngles);
