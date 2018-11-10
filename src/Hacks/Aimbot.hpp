@@ -14,21 +14,24 @@
 
 
 namespace Aimbot {
-    void Run();
 
-    void Smooth(Vector &angle, Vector &viewAngle, float val);
+    Vector GetBonePosition(EntityInfo *player, int bone);
+
+    void GetClosestBone(EntityInfo *target, Vector &viewAngle, Vector &out);
 
     EntityInfo *GetClosestPlayer(Vector &angle, Vector &viewAngle);
 
-    void GetClosestBone(Vector &viewAngle, Vector& out, EntityInfo* target);
+    int GetWeaponID(uintptr_t entityPtr);
 
     void RCS(Vector &angle, Vector &viewAngle);
 
     void AddRC(Vector &angle);
 
+    void Smooth(Vector &angle, Vector &viewAngle, float val);
+
     void Enable();
 
-    int GetWeaponID(uintptr_t entityPtr);
+    void Run();
 
     inline bool enabled = false;
 
