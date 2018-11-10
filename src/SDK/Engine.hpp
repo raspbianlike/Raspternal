@@ -24,6 +24,12 @@ public:
         return sign == 6;
     }
 
+    int GetLocalPlayer() {
+        int index;
+        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.localPlayerIndex, &index, sizeof(int));
+        return index;
+    }
+
     void GetMapName(char *buf) {
         if (!IsInGame())
             buf = nullptr;
