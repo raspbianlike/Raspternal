@@ -20,6 +20,8 @@ namespace Aimbot {
 
     EntityInfo *GetClosestPlayer(Vector &angle, Vector &viewAngle);
 
+    void GetClosestBone(Vector &viewAngle, Vector& out, EntityInfo* target);
+
     void RCS(Vector &angle, Vector &viewAngle);
 
     void AddRC(Vector &angle);
