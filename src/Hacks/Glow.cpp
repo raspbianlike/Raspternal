@@ -31,12 +31,12 @@ void Glow::Run() {
             col = {1.0f, 1.0f, 1.0f, 1.0f};
 
         if (ent.teamNum == localPlayer.entity.teamNum && ent.health > 1)  // teammates blue
-            col = {0.0f, 0.0f, 1.0f, 0.6f};
+            col = {0.0f, 0.0f, 1.0f, 0.5f};
         else if (ent.health) { // enemies red / reen
             if (Triggerbot::crosshairIndex == ent.index)
-                col = {0.0f, 1.0f, 0.0f, 0.6f};
+                col = {0.0f, 1.0f, 0.0f, 0.5f};
             else
-                col = {1.0f, 0.0f, 0.0f, 0.6f};
+                col = {1.0f, 0.0f, 0.0f, 0.5f};
         }
 
         static bool render = true;
@@ -44,8 +44,6 @@ void Glow::Run() {
         csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x8, &col, sizeof(float) * 4);
         csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x28, &render, sizeof(bool));
         csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x29, &render2, sizeof(bool));
-        //csgo.WriteBuffer((uintptr_t) manager.m_GlowObjectDefinitions.DataPtr + i * sizeof(GlowObjectDefinition_t) + 0x2A, &render, sizeof(bool));
-
     }
 }
 
