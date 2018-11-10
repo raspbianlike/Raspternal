@@ -46,6 +46,7 @@ struct sOffsets {
         uintptr_t base;
         uintptr_t viewAngles = 0x8E28;
         uintptr_t signOnState = 0x1A8;
+        uintptr_t localPlayerIndex = 0x21C;
         uintptr_t mapName = 0x228;
     } engine;
 
