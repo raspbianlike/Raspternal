@@ -7,6 +7,8 @@
 #include <dirent.h>
 #include <sys/uio.h>
 #include <filesystem>
+#include <zconf.h>
+#include <libgen.h>
 
 struct mapInfo {
     uintptr_t start = NULL;

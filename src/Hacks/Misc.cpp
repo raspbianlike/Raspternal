@@ -1,9 +1,7 @@
 #include "Misc.hpp"
-#include "../SDK/EntityList.hpp"
-#include "../SDK/Engine.hpp"
 
 void Misc::NoFlash::Run() {
-    static float maxFlashAmount = 700.0f;
+    static float maxFlashAmount = 0.0f;
     static float writeAmount = maxFlashAmount;
     float flash;
 

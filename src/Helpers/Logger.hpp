@@ -15,6 +15,8 @@
 #define UNDERLINE    "\x1B[4m"
 
 #include "../Zero.hpp"
+#include <stdarg.h>
+
 
 class Logger {
 public:

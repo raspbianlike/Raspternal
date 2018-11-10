@@ -9,7 +9,7 @@ void Hacks::Run() {
         Triggerbot::Run();
         Glow::Run();
     }
-    catch(std::exception& e) {
+    catch (std::exception &e) {
         Logger::Error(e.what());
     }
 }

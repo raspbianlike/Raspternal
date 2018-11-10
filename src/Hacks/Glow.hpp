@@ -52,6 +52,7 @@ namespace Glow {
     void Run();
 
     void Enable();
+
     inline bool enabled = false;
 }
 

@@ -4,6 +4,7 @@
 #include "../Sigger.hpp"
 #include "../SDK/definitions.hpp"
 #include "../SDK/Input.hpp"
+#include "../SDK/EntityList.hpp"
 
 namespace Misc {
     namespace NoFlash {

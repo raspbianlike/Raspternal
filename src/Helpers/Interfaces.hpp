@@ -9,7 +9,7 @@ struct InterfaceReg {
 
 
 namespace Interfaces {
-    uintptr_t GetInferface(const char* lib, const char* version);
+    uintptr_t GetInferface(const char *lib, const char *version);
 };
 
 

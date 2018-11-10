@@ -126,8 +126,7 @@ dleaf_t *BSPMap::GetLeafFromPoint(const Vector point) {
     return &m_leaf[-nodenum - 1];
 }
 
-bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd)
-{
+bool BSPMap::Visible(const Vector &vStart, const Vector &vEnd) {
     if (IsNull()) {
         return false;
     }

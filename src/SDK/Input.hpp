@@ -12,12 +12,15 @@
 #include <linux/input.h>
 #include <thread>
 
+#include "../Helpers/Logger.hpp"
+
 inline Display *disp = nullptr;
 
 enum DeviceTypes {
     ms,
     kb
 };
+
 class Input {
 public:
     void Init(DeviceTypes type);

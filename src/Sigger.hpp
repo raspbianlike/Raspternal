@@ -55,7 +55,7 @@ struct sOffsets {
         uintptr_t m_hActiveWeapon = 0x3628;
         uintptr_t m_iItemDefinitionIndex = 0x268;
         //uintptr_t m_AttributeManager = 0x34c0;
-    }weapon;
+    } weapon;
 
 } inline Offsets;
 

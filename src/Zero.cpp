@@ -1,6 +1,4 @@
 #include "Zero.hpp"
-#include <libgen.h>
-#include <zconf.h>
 
 Zero::Zero() {
 }
@@ -26,7 +24,7 @@ void Zero::Process(const char *processName) {
             ssize_t count = readlink(path.c_str(), processPath, PATH_MAX);
 
             if (count != -1)
-                strcpy(processPath,  dirname(processPath));
+                strcpy(processPath, dirname(processPath));
             return;
         }
     }

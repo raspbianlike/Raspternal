@@ -1,8 +1,5 @@
-#include <WinTypes.h>
+
 #include "Run.hpp"
-#include "../SDK/CGlobalVars.hpp"
-#include "../SDK/Engine.hpp"
-#include "../SDK/BSPMap.hpp"
 
 EntityInfo localPlayer{};
 std::array<EntityInfo, 64> entities{};

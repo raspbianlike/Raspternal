@@ -1,5 +1,5 @@
 #include "Logger.hpp"
-#include <cstdarg>
+
 const char *modules[] = {"bhop", "glow", "triggerbot", "noflash"};
 
 void Logger::Address(const char *str, uintptr_t address) {
@@ -14,12 +14,13 @@ void Logger::Modules() {
     //printf(BOLD WHITE CYAN "" BOLD WHITE CYAN "[" RESET BOLD RED "MODULE LIST" BOLD WHITE CYAN "]" RESET BOLD CYAN "\n" RESET);
     printf(BOLD WHITE CYAN "<? " RESET BOLD RED "MODULELIST" RESET BOLD CYAN "\n" RESET);
     for (auto &it : modules)
-    printf(BLUE BOLD "\t%s" RESET "\n", it);
-        //printf(WHITE BOLD "- - - " RESET BLUE BOLD "%s" RESET "\n", it);
+        printf(BLUE BOLD "\t%s" RESET "\n", it);
+    //printf(WHITE BOLD "- - - " RESET BLUE BOLD "%s" RESET "\n", it);
 
     printf(BOLD WHITE CYAN "?>" RESET" \n");
 }
-void Logger::Info(const char* str, ...) {
+
+void Logger::Info(const char *str, ...) {
     char buffer[1024];
     va_list vlist;
     va_start(vlist, str);
@@ -28,7 +29,7 @@ void Logger::Info(const char* str, ...) {
     printf(BOLD WHITE CYAN "[" RESET "INFO" BOLD CYAN "] " RESET CYAN "%s" CYAN RESET "\n", buffer);
 }
 
-void Logger::Debug(const char* str, ...) {
+void Logger::Debug(const char *str, ...) {
     char buffer[1024];
     va_list vlist;
     va_start(vlist, str);
