@@ -120,6 +120,9 @@ int Aimbot::GetWeaponID(uintptr_t entityPtr) {
 
     csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
 
+    if(currentWeaponId > 262200)
+        currentWeaponId &= 0xFFF;
+
     return currentWeaponId;
 }
 
@@ -131,7 +134,7 @@ void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle -= aimPunch * 2.0f;
-    Aimbot::Smooth(angle, viewAngle, 1.3f);
+    Aimbot::Smooth(angle, viewAngle, 1.15f);
 }
 
 void Aimbot::AddRC(Vector &angle) {
@@ -144,7 +147,7 @@ void Aimbot::AddRC(Vector &angle) {
     angle += aimPunch * 2.0f;
 }
 
-void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 6.0f) {
+void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 3.0f) {
     float factor = val;
     Vector delta = angle - viewAngle;
     delta.Normalize();

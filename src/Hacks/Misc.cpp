@@ -18,10 +18,10 @@ void Misc::NoFlash::Run() {
     if (flash <= maxFlashAmount) {
         writeAmount = flash;
     }
-    localPlayer = entityList.GetEntityInfo(engine.GetLocalPlayer());
+    localPlayer = entityList.GetEntityInfo(engine.GetLocalPlayer());*/
     csgo.WriteBuffer(localPlayer.entityPtr + 0xAC08, &writeAmount, sizeof(float));
-    csgo.WriteBuffer(localPlayer.entityPtr + 0xAC0C, &writeAmount, sizeof(float));*/
-    csgo.WriteBuffer(localPlayer.entityPtr + Offsets.localPlayer.flash, &writeAmount, sizeof(float));
+    //csgo.WriteBuffer(localPlayer.entityPtr + 0xAC0C, &writeAmount, sizeof(float));
+    //csgo.WriteBuffer(localPlayer.entityPtr + Offsets.localPlayer.flash, &writeAmount, sizeof(float));
 }
 
 void Misc::NoFlash::Enable() {

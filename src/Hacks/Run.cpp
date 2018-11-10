@@ -38,8 +38,10 @@ void Run::Run() {
         }
 
         if (tick != previousTickCount) {
-            localPlayer = entityList.GetEntityInfo(engine.GetLocalPlayer());
-
+            //localPlayer = entityList.GetEntityInfo(engine.GetLocalPlayer());
+            localPlayer.entityPtr = Offsets.localPlayer.instance;
+            csgo.ReadBuffer(localPlayer.entityPtr, &localPlayer.entity, sizeof(Entity));
+            //printf("maybe index: %i\n", engine.GetLocalPlayer());
             for (int i = 0; i < globalVars.maxClients; i++)
                 entities[i] = entityList.GetEntityInfo(i);
 
