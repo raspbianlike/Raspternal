@@ -171,8 +171,6 @@ void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 0.75f) {
         change = delta * coeff;
     }
 
-    //printf("(%f, %f, %f)\n", change.x, change.y, change.z);
-
     angle = viewAngle + change;
 }
 
