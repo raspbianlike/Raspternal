@@ -151,14 +151,14 @@ void Aimbot::AddRC(QAngle &angle) {
     angle += aimPunch * 2.0f;
 }
 
-void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 0.75f) {
-    Vector delta = angle - viewAngle;
+void Aimbot::Smooth(QAngle &angle, QAngle &viewAngle, float val = 0.75f) {
+    QAngle delta = angle - viewAngle;
     Math::Clamp(delta);
 
     if (delta.Length() < 0.1f)
         return;
 
-    Vector change;
+    QAngle change;
 
     val = std::min(0.99f, val);
     change = delta - (delta * val);
