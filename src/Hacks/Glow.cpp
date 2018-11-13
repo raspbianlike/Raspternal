@@ -8,8 +8,8 @@ void Glow::Run() {
     if (!enabled)
         return;
 
-    memset(definitions, NULL, sizeof(definitions));
-    memset(&manager, NULL, sizeof(manager));
+    memset(definitions, 0, sizeof(definitions));
+    memset(&manager, 0, sizeof(manager));
 
     csgo.ReadBuffer(Offsets.glowManager.memoryAddress, &manager, sizeof(CGlowObjectManager));
 

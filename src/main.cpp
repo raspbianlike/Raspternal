@@ -56,11 +56,12 @@ void ProcessCommand(string message) {
         case help:
             // do nothing, just output a help menu
             //Logger::Help(); // TODO: Implement this
+            Logger::Error("Kisak says cheating is bad, no help for you.");
             break;
         case module:
             // check for module name and perform operation on it
-            if (parts.size() < 1) {
-                Logger::Error("Unknown command!");
+            if (parts.size() < 2) {
+                Logger::Error("You need to State a module!");
                 return;
             }
 
@@ -117,11 +118,11 @@ void ProcessCommand(string message) {
                     Aimbot::Enable();
                     break;
                 default:
-                    Logger::Error("Unknown command!");
+                    Logger::Error("Unknown Module!");
             }
             break;
         default:
-            Logger::Error("Unknown command!");
+            Logger::Error("Unknown Command, try `help`");
     }
 }
 
@@ -142,7 +143,6 @@ void Init() {
 }
 
 int main() {
-    //*(int*) 0x0 = 0;
     Init();
     printf("\n");
     char input[128];

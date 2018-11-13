@@ -17,26 +17,26 @@ namespace Aimbot {
 
     Vector GetBonePosition(EntityInfo *player, int bone);
 
-    void GetClosestBone(EntityInfo *target, Vector &viewAngle, Vector &out);
+    void GetClosestBone(EntityInfo *target, QAngle &viewAngle, Vector &out);
 
-    EntityInfo *GetClosestPlayer(Vector &angle, Vector &viewAngle);
+    EntityInfo *GetClosestPlayer(QAngle &angle, QAngle &viewAngle);
 
     int GetWeaponID(uintptr_t entityPtr);
 
-    void RCS(Vector &angle, Vector &viewAngle);
+    void RCS(QAngle &angle, QAngle &viewAngle);
 
-    void AddRC(Vector &angle);
+    void AddRC(QAngle &angle);
 
-    void Smooth(Vector &angle, Vector &viewAngle, float val);
+    void Smooth(QAngle &angle, QAngle &viewAngle, float val);
 
     void Enable();
 
     void Run();
 
+
+
     inline bool enabled = false;
-
-    inline float bestFov = 5.0f;
-
+    inline float bestFov = 6.0f;
     inline bool shouldRCS = false;
 }
 

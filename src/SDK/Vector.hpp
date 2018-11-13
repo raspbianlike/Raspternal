@@ -322,17 +322,6 @@ inline Vector Vector::Normalize() {
 }
 
 //===============================================
-inline float Vector::NormalizeInPlace() {
-    Vector &v = *this;
-
-    float iradius = 1.f / (this->Length() + 1.192092896e-07F); //FLT_EPSILON
-
-    v.x *= iradius;
-    v.y *= iradius;
-    v.z *= iradius;
-}
-
-//===============================================
 inline float VectorNormalize(Vector &v) {
     Assert(v.IsValid());
     float l = v.Length();

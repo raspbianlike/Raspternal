@@ -16,7 +16,7 @@ Vector Aimbot::GetBonePosition(EntityInfo *player, int bone) {
     return Vector(matrix.x, matrix.y, matrix.z);;
 }
 
-void Aimbot::GetClosestBone(EntityInfo *target, Vector &viewAngle, Vector &out) {
+void Aimbot::GetClosestBone(EntityInfo *target, QAngle &viewAngle, Vector &out) {
     bool bones[] = {false, false, false, false, false, true, true, true, true}; // TODO: Config
 
     const int loopSize = sizeof(bones) / sizeof(bones[0]);
@@ -25,16 +25,16 @@ void Aimbot::GetClosestBone(EntityInfo *target, Vector &viewAngle, Vector &out) 
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
 
-    Vector tempSpot;
+    QAngle tmpAngle;
 
     for (int i = 0; i < loopSize; i++) {
         if (!bones[i])
             continue;
 
         Vector tmpVec = GetBonePosition(target, i);
-        tempSpot = Math::CalcAngle(pVecTarget, tmpVec);
+        tmpAngle = Math::CalcAngle(pVecTarget, tmpVec);
 
-        float tmpFov = Math::AngleFOV(viewAngle, tempSpot);
+        float tmpFov = Math::AngleFOV(viewAngle, tmpAngle);
 
         if (tmpFov > tempFov)
             continue;
@@ -45,7 +45,7 @@ void Aimbot::GetClosestBone(EntityInfo *target, Vector &viewAngle, Vector &out) 
     }
 }
 
-EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
+EntityInfo *Aimbot::GetClosestPlayer(QAngle &angle, QAngle &viewAngle) {
 
     Vector pVecTarget = localPlayer.entity.absOrigin + localPlayer.entity.viewOffset;
 
@@ -62,8 +62,8 @@ EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
         if (!ent->entityPtr || ent->entity.dormant || ent->entity.health < 1 || ent->entity.teamNum == localPlayer.entity.teamNum || ent->entityPtr == localPlayer.entityPtr)
             continue;
 
-        Vector workingAngle = angle;
-        Vector workingView = viewAngle;
+        QAngle workingAngle = angle;
+        QAngle workingView = viewAngle;
 
         AddRC(workingView); // add aim punch back before calculating fov
 
@@ -130,22 +130,22 @@ int Aimbot::GetWeaponID(uintptr_t entityPtr) {
     return currentWeaponId;
 }
 
-void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
+void Aimbot::RCS(QAngle &angle, QAngle &viewAngle) {
     if (!shouldRCS)
         return;
 
-    Vector aimPunch;
+    QAngle aimPunch;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle -= aimPunch * 2.0f;
     Aimbot::Smooth(angle, viewAngle, 0.2f);
 }
 
-void Aimbot::AddRC(Vector &angle) {
+void Aimbot::AddRC(QAngle &angle) {
     if (!shouldRCS)
         return;
 
-    Vector aimPunch;
+    QAngle aimPunch;
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle += aimPunch * 2.0f;
@@ -203,7 +203,7 @@ void Aimbot::Run() {
 
     shouldRCS = (activeWeapon != CSWeaponType::WEAPONTYPE_SNIPER_RIFLE && activeWeapon != CSWeaponType::WEAPONTYPE_PISTOL);
 
-    Vector bestAim, viewAngles;
+    QAngle bestAim, viewAngles;
     engine.GetViewAngles(viewAngles);
 
     EntityInfo *target = GetClosestPlayer(bestAim, viewAngles);

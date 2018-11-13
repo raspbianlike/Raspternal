@@ -2,12 +2,13 @@
 #define RASPTERNAL_MATH_HPP
 
 #include "../SDK/Vector.hpp"
+#include "../SDK/QAngle.hpp"
 
 namespace Math {
-    Vector CalcAngle(Vector &source, Vector &target);
+    QAngle CalcAngle(Vector &source, Vector &target);
 
-    void Clamp(Vector &vec);
+    void Clamp(QAngle &angles);
 
-    float AngleFOV(const Vector &viewAngle, const Vector &aimAngle);
+    float AngleFOV(const QAngle &viewAngle, const QAngle &aimAngle);
 }
 #endif  // RASPTERNAL_MATH_HPP
