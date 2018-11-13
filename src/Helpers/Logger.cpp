@@ -12,7 +12,7 @@ void Logger::CLI() {
 
 void Logger::Modules() {
     //printf(BOLD WHITE CYAN "" BOLD WHITE CYAN "[" RESET BOLD RED "MODULE LIST" BOLD WHITE CYAN "]" RESET BOLD CYAN "\n" RESET);
-    printf(BOLD WHITE CYAN "<? " RESET BOLD RED "MODULELIST" RESET BOLD CYAN "\n" RESET);
+    printf(BOLD WHITE CYAN "<?php " RESET BOLD RED "MODULELIST" RESET BOLD CYAN "\n" RESET);
     for (auto &it : modules)
         printf(BLUE BOLD "\t%s" RESET "\n", it);
     //printf(WHITE BOLD "- - - " RESET BLUE BOLD "%s" RESET "\n", it);
