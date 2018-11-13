@@ -2,20 +2,20 @@
 #define RASPTERNAL_ENGINE_HPP
 
 
-#include "Vector.hpp"
+#include "QAngle.hpp"
 #include "SDK.hpp"
 
 
 class Engine {
 public:
-    void GetViewAngles(Vector &out) {
+    void GetViewAngles(QAngle &out) {
         if (!IsInGame())
             return;
-        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &out, sizeof(Vector));
+        csgo.ReadBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &out, sizeof(QAngle));
     }
 
-    void SetViewAngles(Vector &in) {
-        csgo.WriteBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &in, sizeof(Vector));
+    void SetViewAngles(QAngle &in) {
+        csgo.WriteBuffer(Offsets.engine.base + Offsets.engine.viewAngles, &in, sizeof(QAngle));
     }
 
     bool IsInGame() {

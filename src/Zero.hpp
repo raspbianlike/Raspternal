@@ -11,8 +11,8 @@
 #include <libgen.h>
 
 struct mapInfo {
-    uintptr_t start = NULL;
-    uintptr_t end = NULL;
+    uintptr_t start = 0;
+    uintptr_t end = 0;
     size_t size = 0;
     std::string name;
 };

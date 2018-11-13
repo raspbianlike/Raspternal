@@ -6,8 +6,8 @@ BSPMap::~BSPMap() {}
 void BSPMap::unload() {
     delete[]   buf.data();
     hasInit = false;
-    *m_path = NULL;
-    *m_mapName = NULL;
+    m_path[0] = '\0';
+    m_mapName[0] = '\0';
     m_header = NULL;
     m_plane = NULL;
     m_node = NULL;
@@ -18,10 +18,10 @@ bool BSPMap::IsNull() {
     if (buf.data() == NULL)
         return true;
 
-    if (*m_path == NULL)
+    if (m_path[0] == '\0')
         return true;
 
-    if (*m_mapName == NULL)
+    if (m_mapName[0] == '\0')
         return true;
 
     if (m_header == NULL)

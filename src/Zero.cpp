@@ -113,7 +113,7 @@ uintptr_t Zero::FindPattern(const char *pattern, const char *mask, const char *m
         totalSize -= readSize;
     }
     printf("Unable to find pattern %s!\n", name);
-    return NULL;
+    return 0;
 }
 
 uintptr_t Zero::GetCallAddress(uintptr_t ptr) {
