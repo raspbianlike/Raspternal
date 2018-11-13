@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: ubuntu:rolling
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update -qq
+            apt-get install -y g++ clang-5.0 cmake git liblua5.3 libxdo-dev wget ssh
+      - run:
+          name: System informations
+          command: |
+            uname -romi
+            lsb_release -a
+      - run:
+          name: Build using GCC
+          command: |
+            cmake . && make
+      - run:
+          name: Cleanup GCC Compilation
+          command: |
+            rm -rf CMakeCache.txt
