@@ -10,7 +10,7 @@ jobs:
           name: Install dependencies
           command: |
             apt-get update -qq
-            apt-get install -y g++ cmake git liblua5.3 libxdo-dev wget ssh lsb-release zlib1g-dev
+            apt-get install -y g++ cmake git liblua5.3 libxdo-dev wget ssh lsb-release zlib1g-dev libxt-dev
       - run:
           name: System informations
           command: |
