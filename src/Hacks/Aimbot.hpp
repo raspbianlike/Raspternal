@@ -35,7 +35,6 @@ namespace Aimbot {
 
 
 
-
     inline bool enabled = false;
     inline float bestFov = 6.0f;
     inline bool shouldRCS = false;

@@ -39,7 +39,6 @@ void Run::Run() {
 
         if (tick != previousTickCount) {
             localPlayer = entityList.GetEntityInfo(engine.GetLocalPlayer());
-
             for (int i = 0; i < globalVars.maxClients; i++)
                 entities[i] = entityList.GetEntityInfo(i);
 
