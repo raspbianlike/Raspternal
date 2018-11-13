@@ -9,29 +9,28 @@ Vector Math::CalcAngle(Vector &src, Vector &dst) {
     ret.y = atanf(delta.y / delta.x) * 180.0f / M_PI;
     ret.z = 0.0f;
 
-    if (delta.x >= 0.0)
+    if (delta.x > 0.0)
         ret.y += 180.0f;
 
     return ret;
 }
 
 void Math::Clamp(Vector &vec) {
-    while (vec.y > 180)
-        vec.y -= 360;
+    while (vec.y > 180.0f)
+        vec.y -= 360.0f;
     while (vec.y < -180)
-        vec.y += 360;
+        vec.y += 360.0f;
 
-    if (vec.x > 89)
-        vec.x = 89;
-    else if (vec.x < -89)
-        vec.x = -89;
+    if (vec.x > 89.0f)
+        vec.x = 89.0f;
+    else if (vec.x < -89.0f)
+        vec.x = -89.0f;
 
     if (vec.y != vec.y)
-        vec.y = 0;
+        vec.y = 0.0f;
 
     if (vec.x != vec.x)
-        vec.x = 0;
-
+        vec.x = 0.0f;
 }
 
 float Math::AngleFOV(const Vector &viewAngle, const Vector &aimAngle) {

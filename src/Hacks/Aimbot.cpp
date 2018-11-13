@@ -85,8 +85,12 @@ EntityInfo *Aimbot::GetClosestPlayer(Vector &angle, Vector &viewAngle) {
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 300)
+        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 2000) {
+            if (locked->entity.health < 1) {
+                break;
+            }
             continue;
+        }
 
         target = &entities[i];
         angle = workingAngle;
@@ -120,7 +124,7 @@ int Aimbot::GetWeaponID(uintptr_t entityPtr) {
 
     csgo.ReadBuffer(weapon.entityPtr + Offsets.weapon.m_AttributeManager + 0x60 + Offsets.weapon.m_iItemDefinitionIndex + 0x1A, &currentWeaponId, sizeof(int));
 
-    if(currentWeaponId > 262200)
+    if (currentWeaponId > 262200)
         currentWeaponId &= 0xFFF;
 
     return currentWeaponId;
@@ -134,7 +138,7 @@ void Aimbot::RCS(Vector &angle, Vector &viewAngle) {
     csgo.ReadBuffer(localPlayer.entityPtr + Offsets.localPlayer.aimPunch, &aimPunch, sizeof(Vector));
 
     angle -= aimPunch * 2.0f;
-    Aimbot::Smooth(angle, viewAngle, 1.15f);
+    Aimbot::Smooth(angle, viewAngle, 0.2f);
 }
 
 void Aimbot::AddRC(Vector &angle) {
@@ -147,14 +151,28 @@ void Aimbot::AddRC(Vector &angle) {
     angle += aimPunch * 2.0f;
 }
 
-void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 3.0f) {
-    float factor = val;
+void Aimbot::Smooth(Vector &angle, Vector &viewAngle, float val = 0.75f) {
     Vector delta = angle - viewAngle;
-    delta.Normalize();
+    Math::Clamp(delta);
+
+    if (delta.Length() < 0.1f)
+        return;
+
     Vector change;
 
-    // perform angle change
-    change = delta / factor;
+    val = std::min(0.99f, val);
+    change = delta - (delta * val);
+
+    if (delta.Length() < 1.5f) {
+        float coeff = (1.0f - val) / delta.Length() * 3.5f;
+
+        coeff = std::min(0.99f, coeff);
+
+        change = delta * coeff;
+    }
+
+    //printf("(%f, %f, %f)\n", change.x, change.y, change.z);
+
     angle = viewAngle + change;
 }
 
@@ -164,7 +182,7 @@ void Aimbot::Run() {
     if (!mouse.IsButtonDown(0x1) || !enabled) {
         if (locked) {
             locked = nullptr;
-            lockTime = Utils::GetEpochTime();
+            //lockTime = Utils::GetEpochTime();
         }
         return;
     }
