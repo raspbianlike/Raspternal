@@ -71,7 +71,7 @@ bool Input::IsButtonDown(int key) {
         return false;
 
     if (type == ms) {
-        return (buttonState[0] & key);
+        return buttonState[0] & key;
     }
 
     return this->keystate[key];

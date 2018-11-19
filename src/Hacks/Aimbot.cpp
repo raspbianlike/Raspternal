@@ -77,15 +77,15 @@ EntityInfo *Aimbot::GetClosestPlayer(QAngle &angle, QAngle &viewAngle) {
 
         float fov = Math::AngleFOV(workingView, workingAngle); // calculate absolute fov
 
-        Math::Clamp(workingAngle);
-
+        //Math::Clamp(workingAngle);
+        angle = QAngle();
         if (fov > workingFOV)
             continue;
 
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 2000) {
+        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 300) {
             if (locked->entity.health < 1) {
                 break;
             }
@@ -151,10 +151,9 @@ void Aimbot::AddRC(QAngle &angle) {
     angle += aimPunch * 2.0f;
 }
 
-void Aimbot::Smooth(QAngle &angle, QAngle &viewAngle, float val = 0.75f) {
+void Aimbot::Smooth(QAngle &angle, QAngle &viewAngle, float val = 0.25f) {
     QAngle delta = angle - viewAngle;
     Math::Clamp(delta);
-
     if (delta.Length() < 0.1f)
         return;
 
