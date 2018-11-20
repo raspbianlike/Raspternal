@@ -9,8 +9,8 @@ QAngle Math::CalcAngle(Vector &src, Vector &dst) {
     ret[PITCH] = (asinf(delta.z / hyp)) * 180.0f / M_PI;
     ret[YAW] = (atanf(delta.y / delta.x)) * 180.0f / M_PI;
 
-    //if (delta.x >= 0.0f)
-      //  ret[YAW] += 180.0f;
+    if (delta.x >= 0.0f)
+        ret[YAW] += 180.0f;
 
     return ret;
 }

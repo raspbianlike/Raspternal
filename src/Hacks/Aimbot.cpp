@@ -65,7 +65,7 @@ EntityInfo *Aimbot::GetClosestPlayer(QAngle &angle, QAngle &viewAngle) {
         QAngle workingAngle = angle;
         QAngle workingView = viewAngle;
 
-        AddRC(workingView); // add aim punch back before calculating fov
+        //AddRC(workingView); // add aim punch back before calculating fov // to be continued
 
         GetClosestBone(ent, workingView, eVecTarget); // Gets closest bone to crosshair position
 
@@ -77,17 +77,15 @@ EntityInfo *Aimbot::GetClosestPlayer(QAngle &angle, QAngle &viewAngle) {
 
         float fov = Math::AngleFOV(workingView, workingAngle); // calculate absolute fov
 
-        //Math::Clamp(workingAngle);
-        angle = QAngle();
         if (fov > workingFOV)
             continue;
 
         if (!bspMap.Visible(pVecTarget, eVecTarget))
             continue;
 
-        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 300) {
+        if (locked && ent->entityPtr != locked->entityPtr && Utils::GetEpochTime() - lockTime < 500) {
             if (locked->entity.health < 1) {
-                break;
+                return nullptr;
             }
             continue;
         }
@@ -153,7 +151,7 @@ void Aimbot::AddRC(QAngle &angle) {
 
 void Aimbot::Smooth(QAngle &angle, QAngle &viewAngle, float val = 0.25f) {
     QAngle delta = angle - viewAngle;
-    Math::Clamp(delta);
+    delta.Normalize();
     if (delta.Length() < 0.1f)
         return;
 
@@ -212,6 +210,8 @@ void Aimbot::Run() {
 
     RCS(bestAim, viewAngles);
     Smooth(bestAim, viewAngles);
+
+    bestAim.Normalize();
     Math::Clamp(bestAim);
     engine.SetViewAngles(bestAim);
 
